@@ -1,3 +1,5 @@
+package com.lmhscodingclub.casino.poker;
+
 import java.io.*;
 import static java.lang.System.*;
 import java.util.Scanner;
@@ -26,12 +28,12 @@ public class Poker {
         int[][] bothHands = new int[numPlayers][2];
         for(int i = 0; i < numPlayers; i++){
             for(int x = 0; x < 2; x++){
-                allHands[i][x] = deck.remove();
+                // allHands[i][x] = deck.remove();
             }
         }
-    
         
-        return allHands;
+        return null;
+        // return allHands;
     }
     static String testWinner5Card(int[][] playersHands){
         int numPlayers = playersHands.length;
@@ -50,6 +52,9 @@ public class Poker {
                 }
             }
         }
+
+        // Required for compilation
+        return null;
     }
     public static void main(String[] args)
     {

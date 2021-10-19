@@ -1,3 +1,5 @@
+package com.lmhscodingclub.casino.roulette;
+
 import java.io.*;
 import static java.lang.System.*;
 import java.util.Scanner;
