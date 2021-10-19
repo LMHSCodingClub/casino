@@ -5,7 +5,7 @@ import java.util.*;
 import java.lang.Object;
 
 public class Poker {
-    static ArrayList<Integer> createDeck(){
+    static ArrayList<Integer> createDeck(){ //Makes an array of cards numbered 1-52
         ArrayList<Integer> deck = new ArrayList<>();
         for(int i = 0; i < 52; i++){
             deck.add(i+1);
@@ -29,10 +29,7 @@ public class Poker {
                 allHands[i][x] = deck.remove();
             }
         }
-        
-        p1Hand[0] = deck.get(0); 
-        deck.remove(0);
-        int[][] bothHands = new int[2][2];
+    
         
         return allHands;
     }
