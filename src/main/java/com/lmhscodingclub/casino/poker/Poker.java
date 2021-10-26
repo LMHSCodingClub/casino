@@ -20,7 +20,7 @@ public class Poker {
         ArrayList<Integer> comCards = new ArrayList<Integer>(dealThree(deck));
         printArray(comCards);
     }
-    static ArrayList<Integer> createDeck(){
+    static ArrayList<Integer> createDeck(){ //Makes an array of cards numbered 1-52
         ArrayList<Integer> deck = new ArrayList<>();
         for(int i = 0; i < 52; i++){
             deck.add(i+1);
@@ -37,6 +37,7 @@ public class Poker {
         }
         return newDeck;
     }
+
     static int[][] dealHands(int numPlayers, ArrayList<Integer> deck){
         
         int[][] allHands = new int[numPlayers][2];
@@ -60,8 +61,20 @@ public class Poker {
         for(int i = 0; i < array.size(); i++){
             System.out.print(array.get(i) + " ");
         }
-
     }
+
+    static int[][] dealHandsHoldEm(int numPlayers, ArrayList<Integer> deck){
+        int[][] bothHands = new int[numPlayers][2];
+        for(int i = 0; i < numPlayers; i++){
+            for(int x = 0; x < 2; x++){
+                // allHands[i][x] = deck.remove();
+            }
+        }
+        
+        return null;
+        // return allHands;
+    }
+
     static String testWinner5Card(int[][] playersHands){
         int numPlayers = playersHands.length;
         
@@ -76,13 +89,26 @@ public class Poker {
                 }
                 else if (n == 2){
                     
-                }
-                
+                }                
             }
         }
+
+        return null; // temporary
     }
     static int[][] fold(int[][] allHands){ //This will create the new hand 2d array after a player folds
 
+        // Required for compilation
+        return null;
     }
 
+    /*
+    public static void main(String[] args)
+    {
+        int numPlayers = 2;
+        ArrayList<Integer> deck = createDeck();//Deck is created
+        System.out.println(deck.get(3));
+        deck = shuffleDeck(deck);//Deck is shuffled
+        System.out.println(deck.get(3));
+        //dealHands(numPlayers, deck);
+    }*/
 }
