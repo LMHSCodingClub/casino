@@ -6,27 +6,7 @@ public class Slots {
     }
 
     void play() {
-
-    }
-
-    public static void main(String[] args) {
-        Slots slotGame = new Slots();
-        slotGame.play();
-    }
-}
-
-
-/*
-import java.io.*;
-import static java.lang.System.*;
-
-import java.util.Scanner;
-import java.lang.Math;
-
-class Main{
-
-     public static void main (String str[]) throws IOException {
-         int slot1 = (int)(Math.random()*(20)+1);
+        int slot1 = (int)(Math.random()*(20)+1);
          int slot2 = (int)(Math.random()*(20)+1);
          int slot3 = (int)(Math.random()*(20)+1);
          System.out.println(slot1);
@@ -41,9 +21,11 @@ class Main{
          }else{
             System.out.println("You lost");
          }
-     }
+    }
+
+    public static void main(String[] args) {
+        Slots slotGame = new Slots();
+        slotGame.play();
+    }
 }
 
-
-   
-*/
