@@ -8,37 +8,39 @@ class UserInterface extends JFrame implements ItemListener {
     // Where instance variables are declared:
     JPanel cards;
 
+    final static int WINDOW_WIDTH = 700;
+
     private CardLayout handleGameSwitch(Container pane) {
         CardLayout cardLayout = new CardLayout();
 
-        final String ROULETTE = "Roulette";
         final String SLOTS = "Slots";
+        final String ROULETTE = "Roulette";
         final String POKER = "Poker";
         final String BLACKJACK = "Blackjack";
 
         // Put the JComboBox in a JPanel to get a nicer look.
         JPanel comboBoxPane = new JPanel(); // use FlowLayout
-        String comboBoxItems[] = { ROULETTE, SLOTS, POKER, BLACKJACK };
+        String comboBoxItems[] = { SLOTS, ROULETTE, POKER, BLACKJACK };
         JComboBox<String> cb = new JComboBox<String>(comboBoxItems);
         cb.setEditable(false);
         cb.addItemListener(this);
         comboBoxPane.add(cb);
 
         // Create the "cards".
-        JPanel card1 = new JPanel();
-        card1.add(new JButton("Button 1"));
-        card1.add(new JButton("Button 2"));
-        card1.add(new JButton("Button 3"));
+        JPanel slots = new SlotsPanel((int) getSize().getWidth(), 0);
 
-        JPanel card2 = new JPanel();
-        card2.add(new JTextField("TextField", 20));
+        JPanel roulette = new RoulettePanel();
+
+        JPanel blackjack = new BlackjackPanel();
+
+        JPanel poker = new PokerPanel();
 
         // Create the panel that contains the "cards".
         cards = new JPanel(new CardLayout());
-        cards.add(card1, SLOTS);
-        cards.add(card2, POKER);
-        cards.add(card2, ROULETTE);
-        cards.add(card2, BLACKJACK);
+        cards.add(slots, SLOTS);
+        cards.add(roulette, ROULETTE);
+        cards.add(poker, POKER);
+        cards.add(blackjack, BLACKJACK);
 
         pane.add(comboBoxPane, BorderLayout.PAGE_START);
         pane.add(cards, BorderLayout.CENTER);
@@ -68,7 +70,6 @@ class UserInterface extends JFrame implements ItemListener {
 
         // Display the window.
         frame.pack();
-        frame.setSize(800, 600);
         frame.setResizable(true);
         frame.setVisible(true);
     }
