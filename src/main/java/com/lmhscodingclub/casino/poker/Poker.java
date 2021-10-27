@@ -15,10 +15,11 @@ public class Poker {
         //System.out.println(deck.get(3));
         deck = shuffleDeck(deck);//Deck is shuffled
         //System.out.println(deck.get(0));
-        int[][] allHands = dealHands(numPlayers, deck);
+        ArrayList<int[]> allHands = dealHands(numPlayers, deck);
         //System.out.println(allHands[0][0]);
         ArrayList<Integer> comCards = new ArrayList<Integer>(dealThree(deck));
         printArray(comCards);
+        System.out.println("Hi");
     }
     static ArrayList<Integer> createDeck(){ //Makes an array of cards numbered 1-52
         ArrayList<Integer> deck = new ArrayList<>();
@@ -38,13 +39,12 @@ public class Poker {
         return newDeck;
     }
 
-    static int[][] dealHands(int numPlayers, ArrayList<Integer> deck){
+    static ArrayList<int[]> dealHands(int numPlayers, ArrayList<Integer> deck){
         
-        int[][] allHands = new int[numPlayers][2];
-        for(int c = 0; c < 2; c++){
-            for(int r = 0; r < numPlayers; r++){
-                allHands[r][c] = deck.get(0);
-            }
+        ArrayList<int[]> allHands = new ArrayList<int[]>();
+        for(int i = 0; i < numPlayers; i++){
+            int[] hand = new int[]{deck.get(0), deck.get(0)};
+            allHands.add(hand);
         }
 
         return allHands;
@@ -63,19 +63,8 @@ public class Poker {
         }
     }
 
-    static int[][] dealHandsHoldEm(int numPlayers, ArrayList<Integer> deck){
-        int[][] bothHands = new int[numPlayers][2];
-        for(int i = 0; i < numPlayers; i++){
-            for(int x = 0; x < 2; x++){
-                // allHands[i][x] = deck.remove();
-            }
-        }
-        
-        return null;
-        // return allHands;
-    }
 
-    static String testWinner5Card(int[][] playersHands){
+    static String testWinnerHoldem(int[][] playersHands){
         int numPlayers = playersHands.length;
         
         for (int i = 0; i < numPlayers; i++){//Where put numplayers constant
