@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.*;
 import java.lang.Object;
 
+// https://www.888casino.com/blog/roulette-strategy-guide/how-to-play-roulette
+
 // Creates an array for numbers 00,0 and 1-36
 public class Roulette {
     public static ArrayList<Integer> board_wheel() {
