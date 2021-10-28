@@ -43,6 +43,27 @@ public class Roulette {
         return red;
     }
 
+    public static String chips() {
+        Random rand = new Random();
+        String[] chip_colors = {"Black", "Blue", "Brown", "Green", "Orange", "Pink", "Purple", "Red", "White", "Yellow"};
+        String chip_color;
+        int hold;
+        hold = rand.nextInt(chip_colors.length);
+        chip_color = chip_colors[hold];
+        return chip_color;
+    }
+
+    public static int money() {
+        Scanner scan = new Scanner(System.in);
+        int user_money;
+        int chip_amount;
+
+        System.out.print("Enter the amount of money you would like on the table: ");
+        user_money = scan.nextInt();
+
+        System.out.print("Enter how much each chip is worth: ");
+    }
+
     // Picks a random number from the wheel
     public static int rou_ball(ArrayList<Integer> wheel) {
         Random rand = new Random();
@@ -103,6 +124,8 @@ public class Roulette {
     }
     
     public static int inside_bets() {
+        int in_bet = 0;
+        return in_bet;
         // Placed on only numbers
 
         /*
@@ -141,10 +164,47 @@ public class Roulette {
             - house edge: 5.26%
         */
     }
-
+    
     public static int outside_bets() {
+        int out_bet = 0;
+        return out_bet;
         // Placed on propositions: high-low, odd-even, red-black, first, second, third dozen, etc.
+
+        /*
+        The Column Bet
+            - pick one column (1st row, 2nd row, 3rd row)
+            - 2 to 1
+            - 00 and 0 are not included
+            - house edge: 5.26%
+
+        The Dozens Bet
+            - pick one or two of the dozen (1st 12, 2nd 12, 3rd 12)
+                - layout numbers
+            - 2 to 1
+            - 00 and 0 are not included
+            - house edge: 5.26%
+        
+        The Odd or Even Bet
+            - pick odd or even
+            - 18 odd and 18 even
+                - 00 and 0 do not count (house wins)
+            - 1 to 1
+            - house edge: 5.26%
+        
+        High or Low Bet
+        - pick the (1-18) or (19-36) section
+        - 00 and 0 do not count
+        - 1 to 1
+        - house edge: 5.26%
+        
+        Red or Black Bet
+        - pick the red or black section
+        - 1 to 1
+        - house edge: 5.26%
+        */
     }
+    
+    
 
     public static void main(String[] args) throws Exception {
         rolling();
