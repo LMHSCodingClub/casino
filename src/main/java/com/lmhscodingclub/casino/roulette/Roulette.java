@@ -244,36 +244,6 @@ public class Roulette {
 
     public static void main(String[] args) throws Exception {
         rolling();
-        /*
-        ArrayList<Integer> wheel = board_wheel();
-        int[] black = color_black();
-        int[] red = color_red();
-        int count = 1;
-        int ball = rou_ball(wheel);
-        int roll_ball = 0;
-        System.out.println("Rolling: ");
-        System.out.print(String.format("\033[%dA",count));
-        for (int i = 0; i < 10; i++) {
-            ball = rou_ball(wheel);
-            System.out.print("\t .");
-            Thread.sleep(500);
-            System.out.print(" .");
-            Thread.sleep(500);
-            System.out.print(" .");
-            Thread.sleep(500);
-            System.out.println("\n" + ball);
-            roll_ball = ball;
-            Thread.sleep(1000); // waits for 1 second
-            System.out.print(String.format("\033[%dA",count)); // moves the line up 1
-            System.out.print("\033[2K"); // clears the line
-            System.out.print(String.format("\033[%dA",count)); // moves the line up 1
-            System.out.print("\b\b");
-            //System.out.print(String.format("\033[2J")); // clears the screen
-        }
-        Thread.sleep(1000);
-        System.out.print("\033[2K");
-        System.out.println("\n" + roll_ball);
-        */
     }
 
 }
