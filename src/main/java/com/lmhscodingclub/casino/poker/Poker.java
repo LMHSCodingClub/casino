@@ -6,20 +6,28 @@ import java.util.Scanner;
 import java.util.*;
 import java.lang.Object;
 import com.lmhscodingclub.casino.core.Card;
+//!**/userinterface, !**/roulette, !**/slots, !pom.xml
 public class Poker {
     public static void main(String[] args)
     {
         Scanner scan = new Scanner(System.in);
-        int numPlayers = scan.nextInt();
-        ArrayList<Integer> deck = createDeck();//Deck is created
-        //System.out.println(deck.get(3));
-        deck = shuffleDeck(deck);//Deck is shuffled
-        //System.out.println(deck.get(0));
-        ArrayList<int[]> allHands = dealHands(numPlayers, deck);
-        //System.out.println(allHands[0][0]);
-        ArrayList<Integer> comCards = new ArrayList<Integer>(dealThree(deck));
-        printArray(comCards);
-        System.out.println("Hi");
+        try {
+            int numPlayers = scan.nextInt();
+            int currentBet = 0;
+            ArrayList<Integer> deck = createDeck();//Deck is created
+            deck = shuffleDeck(deck);//Deck is shuffled
+            ArrayList<int[]> allHands = dealHands(numPlayers, deck);//Two cards are dealt to each player into an ArrayList<int[]>
+            ArrayList<Integer> comCards = new ArrayList<Integer>(dealThree(deck));//Three cards from the deck are put into the comCards ArrayList<Integer>
+            printArray(allHands.get(0));
+            
+    
+            scan.close();
+        } catch (InputMismatchException e) {
+            System.out.println("You had to have entered an int");
+        }
+
+
+        
     }
     static ArrayList<Integer> createDeck(){ //Makes an array of cards numbered 1-52
         ArrayList<Integer> deck = new ArrayList<>();
@@ -43,7 +51,9 @@ public class Poker {
         
         ArrayList<int[]> allHands = new ArrayList<int[]>();
         for(int i = 0; i < numPlayers; i++){
-            int[] hand = new int[]{deck.get(0), deck.get(0)};
+            int[] hand = new int[]{deck.get(0), deck.get(1)};
+            deck.remove(0);
+            deck.remove(0);
             allHands.add(hand);
         }
 
@@ -57,12 +67,17 @@ public class Poker {
         }
         return comCards;
     }
-    static void printArray(ArrayList<Integer> array){
+    static void printArrayList(ArrayList<Integer> array){
         for(int i = 0; i < array.size(); i++){
             System.out.print(array.get(i) + " ");
         }
     }
-
+    static void printArray(int[] array){
+        for(int i = 0; i < array.length; i++){
+            System.out.print(array[i] + " ");
+        }
+    }
+     
 
     static String testWinnerHoldem(int[][] playersHands){
         int numPlayers = playersHands.length;
@@ -88,6 +103,32 @@ public class Poker {
 
         // Required for compilation
         return null;
+    }
+
+    static int betRound(ArrayList<int[]> allHands, int numPlayers) {
+        for(int i = 0; i<allHands.size(); i++) {
+            System.out.println("Whadya wanna bet bitc: Type either fold, raise, check, or a number(if player 1)");
+            String decision = scan.nextLine();
+            if (decision.equals("fold")) {
+                allHands.remove(i);
+            }
+            else if (decision.equals("raise")) {
+                int raise = scan.nextInt();
+                if (raise > currentBet)
+                    currentBet = raise;
+                else
+                    System.out.print("Die");
+            }
+            else if (decision.equals("check")) {
+
+            }
+            else {
+
+            }
+            
+
+        }
+
     }
 
     /*
