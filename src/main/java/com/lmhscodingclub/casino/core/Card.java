@@ -92,6 +92,11 @@ public Card(int input) //inputs from 1-51
 
 }
 
+public void setValue(int neu)
+{
+   value = neu;
+}
+
 public int getValue()
 {
     return value;
@@ -107,5 +112,9 @@ public String getRank()
     return rank;
 }
 
+public String toString()
+{
+   return (rank + " of " + suit);
+}
 
 }
