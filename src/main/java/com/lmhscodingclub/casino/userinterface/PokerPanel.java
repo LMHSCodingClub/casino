@@ -2,21 +2,40 @@ package com.lmhscodingclub.casino.userinterface;
 
 import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import java.awt.Color;
 
 import com.lmhscodingclub.casino.poker.Poker;
 
 public class PokerPanel extends JPanel {
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    PokerPanel() {
+        super();
+        JLabel l = new JLabel("Poker");
+        JPanel box = new JPanel();
+        box.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        // Outer rect container
-        g.drawRect(20, 20, 700, 500);
+        add(actionButtons());
 
-        // TITLE
-        g.drawString("POKER", 400, 50);
+        add(l);
+        add(box);
+    }
 
+    private JPanel actionButtons() {
+        JPanel actionButtonStrip = new JPanel();
+
+        JButton fold = new JButton("Fold");
+        JButton call = new JButton("Call");
+        JButton raise = new JButton("Raise");
+        
+        actionButtonStrip.add(fold);
+        actionButtonStrip.add(call);
+        actionButtonStrip.add(raise);
+
+        return actionButtonStrip;
     }
 
     private void drawPoker(Graphics g) {
