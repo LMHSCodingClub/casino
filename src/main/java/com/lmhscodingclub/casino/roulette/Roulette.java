@@ -43,6 +43,55 @@ public class Roulette {
         return red;
     }
 
+    public static String chips() {
+        Random rand = new Random();
+        String[] chip_colors = {"Blue", "Brown", "Orange", "Pink", "Yellow"};
+        String chip_color;
+        int hold;
+        hold = rand.nextInt(chip_colors.length);
+        chip_color = chip_colors[hold];
+        return chip_color;
+    }
+
+    // Only use value chips if the payout is greater than 200 chips
+    public static Object[][] value_chips() {
+        Object[][] value_colors = {{"White", 1}, {"Red", 5}, {"Green", 25}, {"Black", 100}, {"Purple", 500}};
+        return value_colors;
+    }
+
+    public static int user_amount() {
+        Scanner scan = new Scanner(System.in);
+        int user_money;
+
+        System.out.print("Enter the amount of money you would like on the table: ");
+        user_money = scan.nextInt();
+
+        scan.close();
+        return user_money;
+    }
+
+    public static int chip_value() {
+        Scanner scan = new Scanner(System.in);
+        int chip_amount;
+
+        System.out.print("Enter the value of the chips: ");
+        chip_amount = scan.nextInt();
+
+        scan.close();
+        return chip_amount;
+    }
+
+    public static int num_of_chips() {
+        int num_chip;
+        user_money = user_amount();
+        chip_amount = chip_value();
+
+        // 20 chips = 1 stack
+        num_chip = user_money / chip_amount;
+
+        return num_chip;
+    }
+
     // Picks a random number from the wheel
     public static int rou_ball(ArrayList<Integer> wheel) {
         Random rand = new Random();
@@ -51,6 +100,97 @@ public class Roulette {
         return ball;
     }
 
+    /*
+    Betting Rules:
+        - Minimum Bet Inside and Outside: 10
+        - Minimum chip value: 1
+        - Maximums
+            - 5000 even money
+            - 2500 2 to 1
+            - 200 any way inside (any inside bet)
+    */
+    
+    public static int inside_bets() {
+        int in_bet = 0;
+        return in_bet;
+        // Placed on only numbers
+
+        /*
+        The Straight Up
+            - bet one or more numbers
+            - 35 to 1 
+            - house edge: 5.26%
+        
+        Split Bet
+            - more than one number
+            - placed on the line between two numbers
+            - 17 to 1
+            - house edge: 5.26%
+        
+        Street Bet / Three Number Bet / Side Bet / Trio
+            - three numbers with one chip
+            - place chip on the outside border of three numbers
+            - 11 to 1
+            - house edge: 5.26%
+        
+        The Corner / The Square / The Four Number Bet
+            - chip on four numbers
+            - numbers must make a square
+            - 8 to 1
+            - house edge: 5.26%
+        
+        The Five Number Bet / The Monster / The Beast
+            - 5 numbers: 00, 0, 1, 2, and 3
+            - 6 to 1
+            - house edge: 7.89%
+            if chips are placed on those numbers separetly (it becomes the straight up)
+        
+        The Line Bet / Six Number Bet / Sixline Bet
+            - outside border of six numbers (00, 0, 1, 2, 3)
+            - 5 to 1
+            - house edge: 5.26%
+        */
+    }
+    
+    public static int outside_bets() {
+        int out_bet = 0;
+        return out_bet;
+        // Placed on propositions: high-low, odd-even, red-black, first, second, third dozen, etc.
+
+        /*
+        The Column Bet
+            - pick one column (1st row, 2nd row, 3rd row)
+            - 2 to 1
+            - 00 and 0 are not included
+            - house edge: 5.26%
+
+        The Dozens Bet
+            - pick one or two of the dozen (1st 12, 2nd 12, 3rd 12)
+                - layout numbers
+            - 2 to 1
+            - 00 and 0 are not included
+            - house edge: 5.26%
+        
+        The Odd or Even Bet
+            - pick odd or even
+            - 18 odd and 18 even
+                - 00 and 0 do not count (house wins)
+            - 1 to 1
+            - house edge: 5.26%
+        
+        High or Low Bet
+            - pick the (1-18) or (19-36) section
+            - 00 and 0 do not count
+            - 1 to 1
+            - house edge: 5.26%
+        
+        Red or Black Bet
+            - pick the red or black section
+            - 1 to 1
+            - house edge: 5.26%
+        */
+    }
+    
     public static void rolling() throws Exception {
         ArrayList<Integer> wheel = board_wheel();
         int[] black = color_black();
@@ -101,83 +241,9 @@ public class Roulette {
         System.out.print("\033[2K");
         System.out.println("\n" + roll_ball);
     }
-    
-    public static int inside_bets() {
-        // Placed on only numbers
-
-        /*
-        The Straight Up
-            - bet one or more numbers
-            - 35 to 1 
-            - house edge: 5.26%
-        
-        Split Bet
-            - more than one number
-            - placed on the line between two numbers
-            - 17 to 1
-            - house edge: 5.26%
-        
-        Street Bet / Three Number Bet / Side Bet / Trio
-            - three numbers with one chip
-            - place chip on the outside border of three numbers
-            - 11 to 1
-            - house edge: 5.26%
-        
-        The Corner / The Square / The Four Number Bet
-            - chip on four numbers
-            - numbers must make a square
-            - 8 to 1
-            - house edge: 5.26%
-        
-        The Five Number Bet / The Monster / The Beast
-            - 5 numbers: 00, 0, 1, 2, and 3
-            - 6 to 1
-            - house edge: 7.89%
-            if chips are placed on those numbers separetly (it becomes the straight up)
-        
-        The Line Bet / Six Number Bet / Sixline Bet
-            - outside border of six numbers
-            - 5 to 1
-            - house edge: 5.26%
-        */
-    }
-
-    public static int outside_bets() {
-        // Placed on propositions: high-low, odd-even, red-black, first, second, third dozen, etc.
-    }
 
     public static void main(String[] args) throws Exception {
         rolling();
-        /*
-        ArrayList<Integer> wheel = board_wheel();
-        int[] black = color_black();
-        int[] red = color_red();
-        int count = 1;
-        int ball = rou_ball(wheel);
-        int roll_ball = 0;
-        System.out.println("Rolling: ");
-        System.out.print(String.format("\033[%dA",count));
-        for (int i = 0; i < 10; i++) {
-            ball = rou_ball(wheel);
-            System.out.print("\t .");
-            Thread.sleep(500);
-            System.out.print(" .");
-            Thread.sleep(500);
-            System.out.print(" .");
-            Thread.sleep(500);
-            System.out.println("\n" + ball);
-            roll_ball = ball;
-            Thread.sleep(1000); // waits for 1 second
-            System.out.print(String.format("\033[%dA",count)); // moves the line up 1
-            System.out.print("\033[2K"); // clears the line
-            System.out.print(String.format("\033[%dA",count)); // moves the line up 1
-            System.out.print("\b\b");
-            //System.out.print(String.format("\033[2J")); // clears the screen
-        }
-        Thread.sleep(1000);
-        System.out.print("\033[2K");
-        System.out.println("\n" + roll_ball);
-        */
     }
 
 }

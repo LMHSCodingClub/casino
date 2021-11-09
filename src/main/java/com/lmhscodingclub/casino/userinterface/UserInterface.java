@@ -4,6 +4,10 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * @author Varun Singh, Andrew Wang, John Tur
+ */
+// !*/roulette, !*/slots, !*/poker, !*/blackjack
 class UserInterface extends JFrame implements ItemListener {
     // Where instance variables are declared:
     JPanel cards;
