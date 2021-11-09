@@ -10,7 +10,6 @@ public class Slots {
     void play() {
        Hashtable<Integer, Integer> payouts = new Hashtable<>();
        payouts.put(10, 1000);
-       payouts.put()
 
          int slot1 = (int)(Math.random()*(10)+1);
          int slot2 = (int)(Math.random()*(10)+1);
