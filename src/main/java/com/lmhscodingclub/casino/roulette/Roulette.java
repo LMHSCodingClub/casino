@@ -109,9 +109,38 @@ public class Roulette {
             - 2500 2 to 1
             - 200 any way inside (any inside bet)
     */
+
+    public static response all_bets() {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<String> allBets = new ArrayList<>();
+        String bets;
+
+        System.out.println("Enter your bets: ");
+        System.out.println("For line bets, type in the numbers and/or positions together with spaces inbetween");
+        bets = scan.nextLine();
+        allBets.add(bets);
+
+        scan.close();
+    }
     
-    public static int inside_bets() {
-        int in_bet = 0;
+    public static int inside_bets(ArrayList<String> allBets, ArrayList<Integer> wheel) {
+        ArrayList<String> inside = new ArrayList<>();
+        int bet;
+
+        for (int i = 0; i < allBets.size(); i++) {
+            if (allBets.get(i).size() == 1 || allBets.get(i).size() == 2) {
+                if (wheel.contains(Integer.parseInt(allBets.get(i)))) {
+                    inside.add("Straight Up");
+                }
+            }
+            else if (allBets.get(i).size() == 3) {
+                if (wheel.contains(Integer.parseInt(allBets.get(i).charAt(0))) && wheel.contains(Integer.parseInt(allBets.get(i).charAt(2)))) {
+                    inside.add("Split Bet");
+                }
+            }
+        }
+
+        
         return in_bet;
         // Placed on only numbers
 
@@ -205,13 +234,13 @@ public class Roulette {
         hold = (int)(Math.random()*(3)+1);
 
         if (hold == 1) {
-            counter = 10;
+            counter = 15;
         }
         else if (hold == 2) {
-            counter = 12;
+            counter = 20;
         }
         else if (hold == 3) {
-            counter = 14;
+            counter = 25;
         }
 
         System.out.println("Rolling: ");
@@ -236,6 +265,12 @@ public class Roulette {
             System.out.print(String.format("\033[%dA",count)); // moves the line up 1
             System.out.print("\033[2K"); // clears the line
             System.out.print(String.format("\033[%dA",count)); // moves the line up 1
+            /*
+            while (i < counter) {
+                all_bets();
+            }
+            */
+        
         }
         Thread.sleep(1000);
         System.out.print("\033[2K");
