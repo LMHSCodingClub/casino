@@ -124,24 +124,47 @@ public class Roulette {
     }
     
     public static int inside_bets(ArrayList<String> allBets, ArrayList<Integer> wheel) {
-        ArrayList<String> inside = new ArrayList<>();
-        int bet;
+        String[] inside = {"Straight Up", "Split", "Trio", "Square", "Beast", "SixLine"};
+        HashMap<String, String> map = new HashMap<>();
+        String[] sixline= {"1", "4", "7", "10", "13", "16", "19", "22", "25", "28", "31", "34"};
+        boolean bool = true;
+        int six = 0;
 
         for (int i = 0; i < allBets.size(); i++) {
-            if (allBets.get(i).size() == 1 || allBets.get(i).size() == 2) {
-                if (wheel.contains(Integer.parseInt(allBets.get(i)))) {
-                    inside.add("Straight Up");
+            if (allBets.get(i).length() == 1) {
+                map.put(inside[0], allBets.get(i));
+            }
+            else if (allBets.get(i).length() == 3) {
+                for (int j = 0; j < sixline.length; j++) {
+                    if (allBets.get(i).substring(0).equals(sixline[j])) {
+                        six++;
+                    }
+                    if (allBets.get(i).substring(2).equals(sixline[j])) {
+                        six++;
+                    }
+                    else if (allBets.get(i).substring(0).equals(sixline[j]) && allBets.get(i).substring(2).equals(sixline[j])) {
+                        six = 2;
+                    }
+                }
+
+                if (six < 2) {
+                    map.put(inside[1], allBets.get(i));
+                }
+                else {
+                    map.put(inside[5], allBets.get(i));
                 }
             }
-            else if (allBets.get(i).size() == 3) {
-                if (wheel.contains(Integer.parseInt(allBets.get(i).charAt(0))) && wheel.contains(Integer.parseInt(allBets.get(i).charAt(2)))) {
-                    inside.add("Split Bet");
-                }
+            else if (allBets.get(i).length() == 5) {
+                map.put(inside[2], allBets.get(i));
+            }
+            else if (allBets.get(i).length() == 7) {
+                map.put(inside[3], allBets.get(i));
+            }
+            else if (allBets.get(i).length() == 10) {
+                map.put(inside[4], allBets.get(i));
             }
         }
-
         
-        return in_bet;
         // Placed on only numbers
 
         /*
