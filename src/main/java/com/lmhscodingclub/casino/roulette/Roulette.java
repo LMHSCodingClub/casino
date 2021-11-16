@@ -81,7 +81,7 @@ public class Roulette {
         return chip_amount;
     }
 
-    public static int num_of_chips() {
+    public static int num_of_chips(int user_money, int chip_amount) {
         int num_chip;
         user_money = user_amount();
         chip_amount = chip_value();
@@ -109,10 +109,63 @@ public class Roulette {
             - 2500 2 to 1
             - 200 any way inside (any inside bet)
     */
+
+    public static void all_bets() {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<String> allBets = new ArrayList<>();
+        String bets;
+
+        System.out.println("Enter your bets: ");
+        System.out.println("For line bets, type in the numbers and/or positions together with spaces inbetween");
+        bets = scan.nextLine();
+        allBets.add(bets);
+
+        scan.close();
+    }
     
-    public static int inside_bets() {
-        int in_bet = 0;
-        return in_bet;
+    public static HashMap<String, String> inside_bets(ArrayList<String> allBets) {
+        String[] inside = {"Straight Up", "Split", "Trio", "Square", "Beast", "SixLine"};
+        HashMap<String, String> inside_map = new HashMap<>();
+        String[] sixline= {"1", "4", "7", "10", "13", "16", "19", "22", "25", "28", "31", "34"};
+        int six = 0;
+
+        for (int i = 0; i < allBets.size(); i++) {
+            if (allBets.get(i).length() == 1) {
+                inside_map.put(inside[0], allBets.get(i));
+            }
+            else if (allBets.get(i).length() == 3) {
+                for (int j = 0; j < sixline.length; j++) {
+                    if (allBets.get(i).substring(0).equals(sixline[j])) {
+                        six++;
+                    }
+                    if (allBets.get(i).substring(2).equals(sixline[j])) {
+                        six++;
+                    }
+                    else if (allBets.get(i).substring(0).equals(sixline[j]) && allBets.get(i).substring(2).equals(sixline[j])) {
+                        six = 2;
+                    }
+                }
+
+                if (six < 2) {
+                    inside_map.put(inside[1], allBets.get(i));
+                }
+                else {
+                    inside_map.put(inside[5], allBets.get(i));
+                }
+            }
+            else if (allBets.get(i).length() == 5) {
+                inside_map.put(inside[2], allBets.get(i));
+            }
+            else if (allBets.get(i).length() == 7) {
+                inside_map.put(inside[3], allBets.get(i));
+            }
+            else if (allBets.get(i).length() == 10) {
+                inside_map.put(inside[4], allBets.get(i));
+            }
+        }
+
+        return inside_map;
+        
         // Placed on only numbers
 
         /*
@@ -152,9 +205,14 @@ public class Roulette {
         */
     }
     
-    public static int outside_bets() {
-        int out_bet = 0;
-        return out_bet;
+    public static int outside_bets(ArrayList<String> allBets) {
+        String[] outside = {"Column", "Dozens", "Odd/Even", "High/Low", "Red/Black"};
+        HashMap<String, String> outside_map = new HashMap<>();
+        
+
+        for (int i = 0; i < allBets.size(); i++) {
+            if ()
+        }
         // Placed on propositions: high-low, odd-even, red-black, first, second, third dozen, etc.
 
         /*
@@ -205,13 +263,13 @@ public class Roulette {
         hold = (int)(Math.random()*(3)+1);
 
         if (hold == 1) {
-            counter = 10;
+            counter = 15;
         }
         else if (hold == 2) {
-            counter = 12;
+            counter = 20;
         }
         else if (hold == 3) {
-            counter = 14;
+            counter = 25;
         }
 
         System.out.println("Rolling: ");
@@ -236,6 +294,12 @@ public class Roulette {
             System.out.print(String.format("\033[%dA",count)); // moves the line up 1
             System.out.print("\033[2K"); // clears the line
             System.out.print(String.format("\033[%dA",count)); // moves the line up 1
+            /*
+            while (i < counter) {
+                all_bets();
+            }
+            */
+        
         }
         Thread.sleep(1000);
         System.out.print("\033[2K");
