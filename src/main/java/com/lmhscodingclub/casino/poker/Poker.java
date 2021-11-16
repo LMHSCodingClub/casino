@@ -1,12 +1,17 @@
 package com.lmhscodingclub.casino.poker;
 
+
 import java.io.*;
 import static java.lang.System.*;
 import java.util.Scanner;
 import java.util.*;
 import java.lang.Object;
 import com.lmhscodingclub.casino.core.Card;
+import com.lmhscodingclub.casino.core.Player;
+
 //!**/userinterface, !**/roulette, !**/slots, !pom.xml
+
+
 public class Poker {
     public static void main(String[] args)
     {
@@ -14,6 +19,7 @@ public class Poker {
         try {
             int numPlayers = scan.nextInt();
             int currentBet = 0;
+            int starting_cash = 100;
             ArrayList<Integer> deck = createDeck();//Deck is created
             deck = shuffleDeck(deck);//Deck is shuffled
             ArrayList<int[]> allHands = dealHands(numPlayers, deck);//Two cards are dealt to each player into an ArrayList<int[]>
@@ -27,6 +33,10 @@ public class Poker {
         }
 
 
+
+
+
+
         
     }
     static ArrayList<Integer> createDeck(){ //Makes an array of cards numbered 1-52
@@ -36,6 +46,11 @@ public class Poker {
         }
         return deck;
     }
+
+
+
+
+    
     static ArrayList<Integer> shuffleDeck(ArrayList<Integer> originalDeck){
         ArrayList<Integer> newDeck = new ArrayList<Integer>();
         int randomIndex = 0;
@@ -47,6 +62,22 @@ public class Poker {
         return newDeck;
     }
 
+
+
+
+
+    static ArrayList<Player> constructPlayers(int numPlayers,int startingCash){
+        ArrayList<Player> playerList = new ArrayList<Player>();
+        for(int i = 0; i < numPlayers; i++){
+            Player currentPlayer = new Player(i, startingCash);
+            playerList.add(currentPlayer);
+        }
+        return playerList;
+    }
+
+
+
+    
     static ArrayList<int[]> dealHands(int numPlayers, ArrayList<Integer> deck){
         
         ArrayList<int[]> allHands = new ArrayList<int[]>();
@@ -59,6 +90,10 @@ public class Poker {
 
         return allHands;
     }
+
+
+
+    
     static ArrayList<Integer> dealThree(ArrayList<Integer> deck){
         deck.remove(0);
         ArrayList<Integer> comCards = new ArrayList<Integer>();
@@ -67,16 +102,25 @@ public class Poker {
         }
         return comCards;
     }
+
+
+
+
     static void printArrayList(ArrayList<Integer> array){
         for(int i = 0; i < array.size(); i++){
             System.out.print(array.get(i) + " ");
         }
     }
+
+
+
     static void printArray(int[] array){
         for(int i = 0; i < array.length; i++){
             System.out.print(array[i] + " ");
         }
     }
+
+
      
 
     static String testWinnerHoldem(int[][] playersHands){
@@ -99,31 +143,38 @@ public class Poker {
 
         return null; // temporary
     }
-    static int[][] fold(int[][] allHands){ //This will create the new hand 2d array after a player folds
 
-        // Required for compilation
-        return null;
+
+
+
+    static void fold(ArrayList<int[]> allHands, int playerNum){ //This will create the new hand 2d array after a player fold
+        allHands.remove(playerNum);
     }
 
-    static int betRound(ArrayList<int[]> allHands, int numPlayers) {
+
+
+    
+
+    static int betRound(ArrayList<int[]> allHands, int numPlayers, int highestBet) {
         for(int i = 0; i<allHands.size(); i++) {
-            System.out.println("Whadya wanna bet bitc: Type either fold, raise, check, or a number(if player 1)");
+            System.out.println("What would you like to bet: Type either fold, raise, check, or a number(if player 1)");
             String decision = scan.nextLine();
             if (decision.equals("fold")) {
-                allHands.remove(i);
+                fold(allHands, i);
             }
             else if (decision.equals("raise")) {
                 int raise = scan.nextInt();
-                if (raise > currentBet)
-                    currentBet = raise;
+                if (raise > highestBet)
+                    highestBet = raise;
                 else
                     System.out.print("Die");
             }
             else if (decision.equals("check")) {
-
+                    
             }
             else {
-
+                int firstBet = Integer.parseInt(decision);
+                highestBet = firstBet;
             }
             
 
@@ -131,14 +182,5 @@ public class Poker {
 
     }
 
-    /*
-    public static void main(String[] args)
-    {
-        int numPlayers = 2;
-        ArrayList<Integer> deck = createDeck();//Deck is created
-        System.out.println(deck.get(3));
-        deck = shuffleDeck(deck);//Deck is shuffled
-        System.out.println(deck.get(3));
-        //dealHands(numPlayers, deck);
-    }*/
+    
 }
