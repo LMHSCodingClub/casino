@@ -81,7 +81,7 @@ public class Roulette {
         return chip_amount;
     }
 
-    public static int num_of_chips() {
+    public static int num_of_chips(int user_money, int chip_amount) {
         int num_chip;
         user_money = user_amount();
         chip_amount = chip_value();
@@ -110,7 +110,7 @@ public class Roulette {
             - 200 any way inside (any inside bet)
     */
 
-    public static response all_bets() {
+    public static void all_bets() {
         Scanner scan = new Scanner(System.in);
         ArrayList<String> allBets = new ArrayList<>();
         String bets;
@@ -123,16 +123,15 @@ public class Roulette {
         scan.close();
     }
     
-    public static int inside_bets(ArrayList<String> allBets, ArrayList<Integer> wheel) {
+    public static HashMap<String, String> inside_bets(ArrayList<String> allBets) {
         String[] inside = {"Straight Up", "Split", "Trio", "Square", "Beast", "SixLine"};
-        HashMap<String, String> map = new HashMap<>();
+        HashMap<String, String> inside_map = new HashMap<>();
         String[] sixline= {"1", "4", "7", "10", "13", "16", "19", "22", "25", "28", "31", "34"};
-        boolean bool = true;
         int six = 0;
 
         for (int i = 0; i < allBets.size(); i++) {
             if (allBets.get(i).length() == 1) {
-                map.put(inside[0], allBets.get(i));
+                inside_map.put(inside[0], allBets.get(i));
             }
             else if (allBets.get(i).length() == 3) {
                 for (int j = 0; j < sixline.length; j++) {
@@ -148,22 +147,24 @@ public class Roulette {
                 }
 
                 if (six < 2) {
-                    map.put(inside[1], allBets.get(i));
+                    inside_map.put(inside[1], allBets.get(i));
                 }
                 else {
-                    map.put(inside[5], allBets.get(i));
+                    inside_map.put(inside[5], allBets.get(i));
                 }
             }
             else if (allBets.get(i).length() == 5) {
-                map.put(inside[2], allBets.get(i));
+                inside_map.put(inside[2], allBets.get(i));
             }
             else if (allBets.get(i).length() == 7) {
-                map.put(inside[3], allBets.get(i));
+                inside_map.put(inside[3], allBets.get(i));
             }
             else if (allBets.get(i).length() == 10) {
-                map.put(inside[4], allBets.get(i));
+                inside_map.put(inside[4], allBets.get(i));
             }
         }
+
+        return inside_map;
         
         // Placed on only numbers
 
@@ -204,9 +205,14 @@ public class Roulette {
         */
     }
     
-    public static int outside_bets() {
-        int out_bet = 0;
-        return out_bet;
+    public static int outside_bets(ArrayList<String> allBets) {
+        String[] outside = {"Column", "Dozens", "Odd/Even", "High/Low", "Red/Black"};
+        HashMap<String, String> outside_map = new HashMap<>();
+        
+
+        for (int i = 0; i < allBets.size(); i++) {
+            if ()
+        }
         // Placed on propositions: high-low, odd-even, red-black, first, second, third dozen, etc.
 
         /*
