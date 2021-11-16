@@ -3,10 +3,23 @@ package com.lmhscodingclub.casino.slots;
 import java.util.Hashtable;
 import java.util.Scanner;
 
+public class Combo {
+   int [] slotInput;
+
+   equals(i) {
+
+   }
+}
 
 public class Slots {
    // takes user input for bet
    //
+   
+
+   HashMap<String, int> payTable = new HashMap<String, int>();
+  
+
+   
    Slots() {
        // asks user for input for bet amount
        //
@@ -37,15 +50,15 @@ public class Slots {
          System.out.println(slot3);
          // If all slots match, then win; if slot1 and slot2 match, then half the money
          //
-         if(slot1 == slot2){
-            if(slot1 == slot3 || slot2 == slot3){
-               System.out.println("You won!");
-            }else{ 
-               System.out.println("You won half the money");
-            }
-         }else{
-            System.out.println("You lost");
-         }
+         if(slot1 == slot2 && slot2 == slot3) System.out.println("You win!");
+         else if (slot1 == slot2) 
+            System.out.println("You won half the money");
+         else if (slot2 == slot3)
+            System.out.println("You won half the money");
+         else if (slot1 == slot3) 
+            System.out.println("You won half the money");
+         else 
+            System.out.println("You lose");
 
          return 0; // temporary
     }
