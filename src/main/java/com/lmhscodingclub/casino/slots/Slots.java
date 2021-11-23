@@ -26,8 +26,8 @@ public class Slots {
     // spins three slot randomizers
     //
     float play() {
-       Hashtable<Integer, Integer> payouts = new Hashtable<>();
-       payouts.put(10, 1000);
+       Hashtable<SlotsResult, Integer> payouts = new Hashtable<>();
+       payouts.put(new SlotsResult(10, 10, 10), 1000);
 
          int slot1 = (int)(Math.random()*(10)+1);
          int slot2 = (int)(Math.random()*(10)+1);
@@ -35,8 +35,16 @@ public class Slots {
          System.out.println(slot1);
          System.out.println(slot2);
          System.out.println(slot3);
+
+         SlotsResult result = new SlotsResult(slot1, slot2, slot3);
+         if (payouts.containsKey(result)) {
+            System.out.println("You win!");
+         } else {
+            System.out.println("You lose!");
+         }
          // If all slots match, then win; if slot1 and slot2 match, then half the money
          //
+         /*
          if(slot1 == slot2){
             if(slot1 == slot3 || slot2 == slot3){
                System.out.println("You won!");
@@ -45,7 +53,7 @@ public class Slots {
             }
          }else{
             System.out.println("You lost");
-         }
+         }*/
 
          return 0; // temporary
     }
@@ -56,3 +64,27 @@ public class Slots {
     }
 }
 
+class SlotsResult {
+   int x, y, z;
+   public SlotsResult(int x, int y, int z) {
+      this.x = x;
+      this.y = y;
+      this.z = z;
+   }
+
+   @Override
+   public boolean equals(Object o) {
+      if (o instanceof SlotsResult) {
+         SlotsResult other = (SlotsResult)o;
+         return x == other.x && y == other.y && z == other.z;
+      } else {
+         return false;
+      }
+   }
+
+   @Override
+   public int hashCode() {
+      return x ^ y ^ z;
+   }
+
+}
