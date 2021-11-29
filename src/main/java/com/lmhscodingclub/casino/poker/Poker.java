@@ -20,11 +20,11 @@ public class Poker {
             int numPlayers = scan.nextInt();
             int currentBet = 0;
             int starting_cash = 100;
-            ArrayList<Integer> deck = createDeck();//Deck is created
+            ArrayList<Card> deck = createDeck();//Deck is created
             deck = shuffleDeck(deck);//Deck is shuffled
-            ArrayList<int[]> allHands = dealHands(numPlayers, deck);//Two cards are dealt to each player into an ArrayList<int[]>
-            ArrayList<Integer> comCards = new ArrayList<Integer>(dealThree(deck));//Three cards from the deck are put into the comCards ArrayList<Integer>
-            printArray(allHands.get(0));
+            ArrayList<ArrayList<Card>> allHands = dealHands(numPlayers, deck);//Two cards are dealt to each player into an ArrayList<int[]>
+            ArrayList<Card> comCards = new ArrayList<Card>(dealThree(deck));//Three cards from the deck are put into the comCards ArrayList<Integer>
+            //printArray(allHands.get(0));
             
     
             scan.close();
@@ -39,20 +39,20 @@ public class Poker {
 
         
     }
-    static ArrayList<Integer> createDeck(){ //Makes an array of cards numbered 1-52
-        ArrayList<Integer> deck = new ArrayList<>();
+    static ArrayList<Card> createDeck(){ //Makes an array of cards numbered 1-52
+        ArrayList<Card> deck = new ArrayList<>();
         for(int i = 0; i < 52; i++){
-            deck.add(i+1);
+            Card currentCard = new Card(i);
+            deck.add(currentCard);
         }
         return deck;
     }
 
 
 
-
     
-    static ArrayList<Integer> shuffleDeck(ArrayList<Integer> originalDeck){
-        ArrayList<Integer> newDeck = new ArrayList<Integer>();
+    static ArrayList<Card> shuffleDeck(ArrayList<Card> originalDeck){
+        ArrayList<Card> newDeck = new ArrayList<Card>();
         int randomIndex = 0;
         for(int i = 0; i < 52; i++){
             randomIndex = (int)(Math.random()*(originalDeck.size()));
@@ -78,11 +78,13 @@ public class Poker {
 
 
     
-    static ArrayList<int[]> dealHands(int numPlayers, ArrayList<Integer> deck){
+    static ArrayList<ArrayList<Card>> dealHands(int numPlayers, ArrayList<Card> deck){
         
-        ArrayList<int[]> allHands = new ArrayList<int[]>();
+        ArrayList<ArrayList<Card>> allHands = new ArrayList<ArrayList<Card>>();
         for(int i = 0; i < numPlayers; i++){
-            int[] hand = new int[]{deck.get(0), deck.get(1)};
+            ArrayList<Card> hand = new ArrayList<Card>();
+            hand.add(deck.get(0));
+            hand.add(deck.get(1));
             deck.remove(0);
             deck.remove(0);
             allHands.add(hand);
@@ -94,9 +96,9 @@ public class Poker {
 
 
     
-    static ArrayList<Integer> dealThree(ArrayList<Integer> deck){
+    static ArrayList<Card> dealThree(ArrayList<Card> deck){
         deck.remove(0);
-        ArrayList<Integer> comCards = new ArrayList<Integer>();
+        ArrayList<Card> comCards = new ArrayList<Card>();
         for(int i = 0; i < 3; i++){
             comCards.add(deck.remove(0));
         }
@@ -127,6 +129,8 @@ public class Poker {
         int numPlayers = playersHands.length;
         
         for (int i = 0; i < numPlayers; i++){//Where put numplayers constant
+
+
             for (int  n = 0; n < 10; n ++){
                 if (n == 0){
                     //Royal Flush
@@ -137,6 +141,12 @@ public class Poker {
                 }
                 else if (n == 2){
                     
+                }
+                else if(){
+                    
+                }
+                else{  
+
                 }                
             }
         }
@@ -144,6 +154,27 @@ public class Poker {
         return null; // temporary
     }
 
+    static int isDoubles(ArrayList<Card> testingCards){
+        class CardValueComparator implements Comparator<Card> {
+
+            @Override
+            public int compare(Card o1, Card o2) {
+                if (o1.getValue() == o2.getValue()) return 0;
+                return o1.getValue() > o2.getValue() ? 1 : -1;
+            }
+   
+        }
+
+        TreeSet<Card> x = new TreeSet<>(new CardValueComparator());
+        int count = 0;
+        for (Card c : testingCards) {
+            if (x.add(c) == false) {
+                // duplicate detected
+                count++;
+            }
+        }
+        return count;
+    }
 
 
 
@@ -151,9 +182,9 @@ public class Poker {
         allHands.remove(playerNum);
     }
 
-
-
-    
+    static void raised(int num){ 
+        currentBet = num;
+    }
 
     static int betRound(ArrayList<int[]> allHands, int numPlayers, int highestBet) {
         for(int i = 0; i<allHands.size(); i++) {
@@ -164,10 +195,7 @@ public class Poker {
             }
             else if (decision.equals("raise")) {
                 int raise = scan.nextInt();
-                if (raise > highestBet)
-                    highestBet = raise;
-                else
-                    System.out.print("Die");
+                raised(raise);
             }
             else if (decision.equals("check")) {
                     
@@ -180,6 +208,7 @@ public class Poker {
 
         }
 
+    
     }
 
     
