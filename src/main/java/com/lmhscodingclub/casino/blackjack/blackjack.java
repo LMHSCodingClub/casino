@@ -7,16 +7,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.Math;
 import com.lmhscodingclub.casino.core.Card;
+import com.lmhscodingclub.casino.core.Player;
 
 class blackjack{
 
      public static void main (String str[]) throws IOException {
           Scanner scan = new Scanner(System.in);
-          int tempVal;
-          
-          
-          ArrayList<Card> hand = new ArrayList<Card>();
-          ArrayList<Card> dealer = new ArrayList<Card>();
+          int tempVal = 0;
+          boolean play = true;
+         
+         
+      while(1 > 0 && play) // will be about player balance later
+       {
+         ArrayList<Card> hand = new ArrayList<Card>();
+         ArrayList<Card> dealer = new ArrayList<Card>();
          
          int total = 0;
          int dealer_total = 0;
@@ -88,7 +92,7 @@ class blackjack{
              
              String answer = scan.nextLine();
              
-             if (answer.equals("Yes") || answer.equals("yes") )
+             if (answer.equals("Yes") || answer.equals("yes") || answer.equals("y") )
              {
                tempVal = (int)(1 + (Math.random()*52));
                hand.add(new Card(tempVal));
@@ -242,7 +246,24 @@ class blackjack{
         System.out.println("Better luck next time!");
         }
                              
+     
+     
+     System.out.println("Wanna play again?");
+     
+     String answer = scan.nextLine();
+     
+     if (answer.equals("Yes") || answer.equals("yes") || answer.equals("y") )
+     {
+       // play stays true
      }
+     else
+     {
+       play = false;
+     }
+
+     
+     } // end of gameplay loop
+    }
 
 }
 
