@@ -125,13 +125,18 @@ public class Poker {
 
      
 
-    static String testWinnerHoldem(int[][] playersHands){
-        int numPlayers = playersHands.length;
-        
+    static String testWinnerHoldem(ArrayList<ArrayList<Card>> playersHands){
+        int numPlayers = playersHands.size();
+
         for (int i = 0; i < numPlayers; i++){//Where put numplayers constant
+            ArrayList<Card> testingArr = playersHands.get(i);
+            HashSet<Integer> modTestingSet = new HashSet<Integer>();//Fix this cuz the set only has values
+            for(Card card : testingArr){
+                modTestingSet.add(card.getValue());
+            }
 
+            for (int  n = 0; n < 10; n ++){ 
 
-            for (int  n = 0; n < 10; n ++){
                 if (n == 0){
                     //Royal Flush
                     
@@ -142,7 +147,7 @@ public class Poker {
                 else if (n == 2){
                     
                 }
-                else if(){
+                else if(n == 3){
                     
                 }
                 else{  
@@ -154,26 +159,13 @@ public class Poker {
         return null; // temporary
     }
 
-    static int isDoubles(ArrayList<Card> testingCards){
-        class CardValueComparator implements Comparator<Card> {
+    static int[] countDuplicates(ArrayList<Card> testingCards){
 
-            @Override
-            public int compare(Card o1, Card o2) {
-                if (o1.getValue() == o2.getValue()) return 0;
-                return o1.getValue() > o2.getValue() ? 1 : -1;
-            }
-   
+        int[] dupes = new int[13];
+        for(int i = 0; i < testingCards.size(); i++ ){
+            dupes[testingCards.get(i).getValue()]++;
         }
-
-        TreeSet<Card> x = new TreeSet<>(new CardValueComparator());
-        int count = 0;
-        for (Card c : testingCards) {
-            if (x.add(c) == false) {
-                // duplicate detected
-                count++;
-            }
-        }
-        return count;
+        return dupes;
     }
 
 
