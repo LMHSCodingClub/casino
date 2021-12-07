@@ -5,15 +5,20 @@ import static java.lang.System.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.text.DefaultStyledDocument.ElementSpec;
+
 import java.lang.Math;
 import com.lmhscodingclub.casino.core.Card;
 import com.lmhscodingclub.casino.core.Player;
 
 class blackjack{
 
-     public static void main (String str[]) throws IOException {
+     public static void main (Player baka) throws IOException {
           Scanner scan = new Scanner(System.in);
           int tempVal = 0;
+          double betMax = 1000;
+          double pot = 0;
           boolean play = true;
          
          
@@ -24,7 +29,29 @@ class blackjack{
          
          int total = 0;
          int dealer_total = 0;
-          
+        
+         boolean bet = false;
+         while(!bet)
+         {
+            System.out.println("How much Kromer do you want to bet?");
+            double betNum = scan.nextDouble();
+
+            if(betNum > baka.wallet)
+            {
+              System.out.println("Sorry, I can't give credit. Bet that when you're a little mmm richer!");
+            }
+            else if (betNum > betMax)
+            {
+              System.out.println("Those stakes are too high! Lower them below " + betMax + " Kromer!");
+            }
+            else //Valid bet
+            {
+              pot = baka.takeBetAmount(betNum);
+            } 
+         }
+        
+
+
           //DO THE 11s ACE THING HERE, TOO
           
           for(int i = 0; i < 2; i++)
@@ -138,7 +165,8 @@ class blackjack{
           else
           {
                total = -1;
-               System.out.println("You busted, buster!");  
+               System.out.println("You busted, buster!");
+               // Bet money taken not returned.  
           }
          
         if(total != -1)
@@ -208,14 +236,17 @@ class blackjack{
            {
             System.out.println("The house busts. You win!");
             dealer_total = 0;
+            baka.takePot(pot*2);
            }
           else if(total > dealer_total)
           {
-            System.out.println("You win!");   
+            System.out.println("You win!");
+            baka.takePot(pot*2);   
           }
           else if(total < dealer_total)
           {
             System.out.println("You lose.");
+            //Money not returned
           }
           else
           {
@@ -223,18 +254,22 @@ class blackjack{
             if(total != 21)
             {
                System.out.println("Push. No winner or loser.");
+               baka.takePot(pot);
             }
             else if(dealer.size() == 2 && hand.size() != 2)
             {
                System.out.println("You lose, dealer has Blackjack.");
+               //Money not returned
             }
             else if(hand.size() == 2 && dealer.size() != 2)
             {
                System.out.println("Blackjack! You win.");
+               baka.takePot(pot*2);
             }
             else // (hand.size() == 2 && dealer.size() == 2)
             {
                System.out.println("Push. No winner or loser.");
+               baka.takePot(pot);
             }
             
             

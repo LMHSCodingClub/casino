@@ -4,7 +4,7 @@ public class Player {
     //Attributes
     public static int playerNum = 0;
     public static final int startingCash = 100;
-    public int wallet;
+    public double wallet;
     public int playerNumber;
     public Card[] hand;
     
@@ -18,13 +18,14 @@ public class Player {
 
     }
     //Player Methods
-    public void takeBetAmount(int amount){
+    public double takeBetAmount(double amount){
+        wallet -= amount;
+        return amount;
+    }
+    public void takeAmount(double amount){
         wallet -= amount;
     }
-    public void takeAmount(int amount){
-        wallet -= amount;
-    }
-    public void takePot(int potSize){
+    public void takePot(double potSize){
         wallet += potSize;
     }
     public void giveCards(Card[] cards){
