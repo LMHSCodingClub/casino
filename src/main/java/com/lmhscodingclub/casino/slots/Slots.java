@@ -19,6 +19,7 @@ public class Slots {
             System.out.println("Please enter a valid input (from $1 to $3)");
             bet = input.nextFloat();
          }
+         System.out.println("");
          input.close();
          
     }
@@ -27,7 +28,9 @@ public class Slots {
     //
     float play() {
        Hashtable<SlotsResult, Integer> payouts = new Hashtable<>();
-       payouts.put(new SlotsResult(10, 10, 10), 1000);
+       for (int i = 10; i > 0; i--) {
+          payouts.put(new SlotsResult(i, i, i), i * 100)
+       }
 
          int slot1 = (int)(Math.random()*(10)+1);
          int slot2 = (int)(Math.random()*(10)+1);
