@@ -29,7 +29,7 @@ public class Slots {
     float play() {
        Hashtable<SlotsResult, Integer> payouts = new Hashtable<>();
        for (int i = 10; i > 0; i--) {
-          payouts.put(new SlotsResult(i, i, i), i * 100)
+          payouts.put(new SlotsResult(i, i, i), i * 100);
        }
 
          int slot1 = (int)(Math.random()*(10)+1);
