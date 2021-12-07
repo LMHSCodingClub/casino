@@ -1,14 +1,19 @@
 package com.lmhscodingclub.casino.core;
+import com.lmhscodingclub.casino.core.Card;
 public class Player {
-    //Att ributes
+    //Attributes
+    public static int playerNum = 0;
+    public static final int startingCash = 100;
     public int wallet;
     public int playerNumber;
-    public int[] hand;
-
+    public Card[] hand;
+    
     //Contructor
-    public Player(int playerNum, int startingCash){
+    public Player(){
 
         playerNumber = playerNum;
+        playerNum++;
+        
         wallet = startingCash;
 
     }
@@ -16,10 +21,18 @@ public class Player {
     public void takeBetAmount(int amount){
         wallet -= amount;
     }
+    public void takeAmount(int amount){
+        wallet -= amount;
+    }
     public void takePot(int potSize){
         wallet += potSize;
     }
-    public void giveCards(int[] cards){
+    public void giveCards(Card[] cards){
         hand = cards;
     }
+    public String getBalance(){
+        String bal = "" + wallet + " Kromer";
+        return bal; 
+    }
+    
 }
