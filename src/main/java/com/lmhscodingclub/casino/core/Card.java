@@ -5,13 +5,14 @@ public class Card {
 private int value;
 private String rank;
 private String suit;
-
+private int suitValue;
 
 public Card()
 {
  value= 0;
  rank = "error";
  suit = "error";
+ suitValue = 0;
 }
 
 public Card(int input) //inputs from 1-51
@@ -76,18 +77,22 @@ public Card(int input) //inputs from 1-51
  if(input < 13)
  {
   suit = "Hearts";
+  suitValue = 0;
  }
  else if (input < 26)
  {
   suit = "Spades";
+  suitValue = 1;
  }
  else if (input < 39)
  {
   suit = "Clubs";
+  suitValue = 2;
  }
  else if (input < 52)
  {
   suit = "Diamonds";
+  suitValue = 3;
  }
 
 }
@@ -117,5 +122,8 @@ public String toString()
    return (rank + " of " + suit);
 }
 
+public int getSuitValue(){
+    return suitValue;
+}
 
 }

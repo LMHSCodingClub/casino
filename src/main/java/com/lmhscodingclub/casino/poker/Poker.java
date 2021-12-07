@@ -159,13 +159,24 @@ public class Poker {
         return null; // temporary
     }
 
-    static int[] countDuplicates(ArrayList<Card> testingCards){
+    static int[] getWinCode(ArrayList<Card> testingList){//write this
+        int[] result = new int[2];
+        //int[] modifiedTesting = countDuplicates(testingList);
+        //royalFlush(modifiedTesting);
+        return result;
+    }
+    static boolean royalFlush(int[] arr){
+        
+        return false;
+    }
+    static ArrayList<int[]> countDuplicates(ArrayList<Card> testingCards){//write this to work change card class
 
-        int[] dupes = new int[13];
+        ArrayList<int[]> counts = new ArrayList<int[]>();
         for(int i = 0; i < testingCards.size(); i++ ){
-            dupes[testingCards.get(i).getValue()]++;
+            //int currentValue = testingCards.get(i).getValue();
+            //counts.add([currentValue,]);//First value is the value, second is the suit
         }
-        return dupes;
+        return counts;
     }
 
 
