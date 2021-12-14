@@ -18,9 +18,17 @@ public class SwingTest {
     
     public static void startUpGame() {
         JFrame f = new JFrame("Roulette");
-        f.setSize(900,450);
+        //f.setSize(900,450);
+        f.setBounds(0, 0, 1050, 600);
         f.setLayout(null);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setBackground(Color.GREEN);
+
+        JLayeredPane lPane = new JLayeredPane();
+        //lPane.setPreferredSize(new Dimension (800, 407));
+        lPane.setBounds(0, 0, 1050, 407);
+        lPane.setVisible(true);
+        lPane.setBackground(Color.GREEN);
 
         JPanel mainP = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel p0 = new JPanel();
@@ -32,38 +40,63 @@ public class SwingTest {
         JPanel p6 = new JPanel();
         JPanel p7 = new JPanel();
 
-        f.setContentPane(mainP);
+        JPanel mainP2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JPanel p8 = new JPanel();
+        JPanel p9 = new JPanel();
 
-        mainP.setPreferredSize(new Dimension(800, 407));
-        p0.setPreferredSize(new Dimension(800, 75));
-        p1.setPreferredSize(new Dimension(800, 8));
-        p2.setPreferredSize(new Dimension(800, 75));
-        p3.setPreferredSize(new Dimension(800, 8));
-        p4.setPreferredSize(new Dimension(800, 75));
-        p5.setPreferredSize(new Dimension(800, 8));
-        p6.setPreferredSize(new Dimension(800, 75));
-        p7.setPreferredSize(new Dimension(800, 75));
+        //mainP.setPreferredSize(new Dimension(800, 407));
+        mainP.setBounds(25, 50, 988, 407);
+        mainP2.setBounds(17, 50, 1004, 83);
+        p0.setPreferredSize(new Dimension(988, 75));
+        p1.setPreferredSize(new Dimension(988, 8));
+        p2.setPreferredSize(new Dimension(988, 75));
+        p3.setPreferredSize(new Dimension(988, 8));
+        p4.setPreferredSize(new Dimension(988, 75));
+        p5.setPreferredSize(new Dimension(988, 8));
+        p6.setPreferredSize(new Dimension(988, 75));
+        p7.setPreferredSize(new Dimension(988, 75));
+        p8.setPreferredSize(new Dimension(1004, 75));
+        p9.setPreferredSize(new Dimension(1004, 8));
 
-        p0.setLayout(new GridLayout(1, 12));
-        p1.setLayout(new GridLayout(1, 12));
-        p2.setLayout(new GridLayout(1, 12));
-        p3.setLayout(new GridLayout(1, 12));
-        p4.setLayout(new GridLayout(1, 12));
-        p5.setLayout(new GridLayout(1, 12));
-        p6.setLayout(new GridLayout(1, 3));
-        p7.setLayout(new GridLayout(1, 6));
+        p0.setLayout(new GridLayout(1, 12, 8, 0));
+        p1.setLayout(new GridLayout(1, 12, 8, 0));
+        p2.setLayout(new GridLayout(1, 12, 8, 0));
+        p3.setLayout(new GridLayout(1, 12, 8, 0));
+        p4.setLayout(new GridLayout(1, 12, 8, 0));
+        p5.setLayout(new GridLayout(1, 12, 8, 0));
+        p6.setLayout(new GridLayout(1, 3, 8, 0));
+        p7.setLayout(new GridLayout(1, 6, 8, 0));
+        p8.setLayout(new GridLayout(1, 13, 75, 0));
+        p9.setLayout(new GridLayout(1, 13, 75, 0));
 
 
         mainP.setBackground(Color.GREEN);
+        mainP2.setBackground(Color.GREEN);
+        p0.setBackground(Color.GREEN);
+        p1.setBackground(Color.GREEN);
+        p2.setBackground(Color.GREEN);
+        p3.setBackground(Color.GREEN);
+        p4.setBackground(Color.GREEN);
+        p5.setBackground(Color.GREEN);
+        p6.setBackground(Color.GREEN);
+        p7.setBackground(Color.GREEN);
+        p8.setBackground(Color.GREEN);
+        p9.setBackground(Color.GREEN);
         p0.setVisible(true);
         p1.setVisible(true);
         p2.setVisible(true);
         p3.setVisible(true);
         p4.setVisible(true);
         p5.setVisible(true);
+
         p6.setVisible(true);
         p7.setVisible(true);
+
+        p8.setVisible(true);
+        p9.setVisible(true);
+
         mainP.setVisible(true);
+        mainP2.setVisible(true);
 
         int[][] board = {{3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36},
                         {0,0,0,0,0,0,0,0,0,0,0,0}, 
@@ -84,7 +117,8 @@ public class SwingTest {
                 JButton temp = new JButton(board[i][j] + " " + " ");
                 temp.setContentAreaFilled(true);
                 temp.setOpaque(true);
-                temp.setBorderPainted(false);
+                temp.setBorderPainted(true);
+                temp.setBorder(BorderFactory.createLineBorder(Color.WHITE));
                 temp.setForeground(Color.WHITE);
                 temp.setBackground(colors[i][j]);
 
@@ -142,6 +176,26 @@ public class SwingTest {
             p7.add(temp3);
         }
 
+        for (int a = 0; a < 13; a++) {
+            JButton temp4 = new JButton("0" + " " + " ");
+            temp4.setContentAreaFilled(true);
+            temp4.setOpaque(true);
+            temp4.setBorderPainted(true);
+            temp4.setForeground(Color.WHITE);
+            temp4.setBackground(Color.WHITE);
+            p8.add(temp4);
+        }
+
+        for (int b = 0; b < 13; b++) {
+            JButton temp5 = new JButton("0" + " " + " ");
+            temp5.setContentAreaFilled(true);
+            temp5.setOpaque(true);
+            temp5.setBorderPainted(true);
+            temp5.setForeground(Color.WHITE);
+            temp5.setBackground(Color.WHITE);
+            p9.add(temp5);
+        }
+
         mainP.add(p0);
         mainP.add(p1);
         mainP.add(p2);
@@ -150,11 +204,16 @@ public class SwingTest {
         mainP.add(p5);
         mainP.add(p6);
         mainP.add(p7);
-        //f.add(mainP);
+        mainP2.add(p8);
+        mainP2.add(p9);
+
+        lPane.add(mainP);
+        lPane.add(mainP2);
+        f.setContentPane(lPane);
+
         f.setVisible(true);
     }
     
-
     public static void main(String[] args) {
         new SwingTest();
     }
