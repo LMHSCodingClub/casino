@@ -29,7 +29,7 @@ public class SwingTest {
         JLayeredPane lPane = new JLayeredPane();
         //lPane.setLayout(new BorderLayout());
         lPane.setBounds(0, 0, 1079, 407);
-        lPane.setVisible(true);
+        //lPane.setVisible(true);
         lPane.setBackground(Color.GREEN);
 
         JPanel mainP = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -49,11 +49,16 @@ public class SwingTest {
         JPanel p11 = new JPanel();
         JPanel p12 = new JPanel();
         JPanel p13 = new JPanel();
-        JPanel p14 = new JPanel();
+        JPanel p14 = new JPanel() {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(75, 125);
+            };
+        };
 
         //mainP.setPreferredSize(new Dimension(800, 407));
-        mainP.setBounds(83, 50, 988, 407);
-        mainP2.setBounds(75, 50, 1004, 249);
+        mainP.setBounds(93, 50, 988, 407);
+        mainP2.setBounds(85, 50, 1004, 249);
         p0.setPreferredSize(new Dimension(988, 75));
         p1.setPreferredSize(new Dimension(988, 8));
         p2.setPreferredSize(new Dimension(988, 75));
@@ -68,7 +73,7 @@ public class SwingTest {
         p11.setPreferredSize(new Dimension(1004, 8));
         p12.setPreferredSize(new Dimension(1004, 75));
         p13.setPreferredSize(new Dimension(1004, 8));
-        p14.setPreferredSize(new Dimension(75, 125));
+        //p14.setPreferredSize(new Dimension(75, 125));
 
         p0.setLayout(new GridLayout(1, 12, 8, 0));
         p1.setLayout(new GridLayout(1, 12, 8, 0));
@@ -84,7 +89,7 @@ public class SwingTest {
         p11.setLayout(new GridLayout(1, 13, 75, 0));
         p12.setLayout(new GridLayout(1, 13, 75, 0));
         p13.setLayout(new GridLayout(1, 13, 75, 0));
-        //p14.setLayout();
+        //p14.setLayout(null);
 
         mainP.setBackground(Color.GREEN);
         mainP2.setBackground(Color.GREEN);
@@ -120,7 +125,7 @@ public class SwingTest {
         p11.setVisible(true);
         p12.setVisible(true);
         p13.setVisible(true);
-        p14.setVisible(true);
+        //p14.setVisible(true);
 
         mainP.setVisible(true);
         mainP2.setVisible(true);
@@ -270,7 +275,11 @@ public class SwingTest {
         temp10.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         temp10.setForeground(Color.WHITE);
         temp10.setBackground(Color.GREEN);
+        temp10.setBounds(0,0,75,125);
         p14.add(temp10);
+        p14.setBounds(0, 75, 75, 125);
+        p14.setVisible(true);
+        //p14.setPreferredSize(new Dimension(75, 125));
 
         mainP.add(p0);
         mainP.add(p1);
@@ -292,6 +301,7 @@ public class SwingTest {
         lPane.add(p14);
         f.setContentPane(lPane);
 
+        lPane.setVisible(true);
         f.setVisible(true);
     }
     
