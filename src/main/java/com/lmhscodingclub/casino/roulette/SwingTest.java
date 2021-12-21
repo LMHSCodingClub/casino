@@ -169,34 +169,46 @@ public class SwingTest {
                             {Color.RED, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.RED, Color.RED, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.RED},
                             {Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE,Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE}};
         
+        JButton[] buttons = new JButton[72];
+        int count = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                JButton temp = new JButton(board[i][j] + " " + " ");
-                temp.setContentAreaFilled(true);
-                temp.setOpaque(true);
-                temp.setBorderPainted(true);
-                temp.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-                temp.setForeground(Color.WHITE);
-                temp.setBackground(colors[i][j]);
+                //JButton temp = new JButton(board[i][j] + " " + " ");
+                buttons[count] = new JButton(board[i][j] + " " + " ");
+                buttons[count].setContentAreaFilled(true);
+                buttons[count].setOpaque(true);
+                buttons[count].setBorderPainted(true);
+                buttons[count].setBorder(BorderFactory.createLineBorder(Color.WHITE));
+                buttons[count].setForeground(Color.WHITE);
+                buttons[count].setBackground(colors[i][j]);
+                String choice = String.valueOf(board[i][j]);
+                buttons[count].setActionCommand(choice);
+                buttons[count].addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        
+                        System.out.println("You have clicked button " + choice);
+                    }
+                });
 
                 if (i == 0) {
-                    p0.add(temp);
+                    p0.add(buttons[count]);
                 }
                 else if (i == 1) {
-                    p1.add(temp);
+                    p1.add(buttons[count]);
                 }
                 else if (i == 2) {
-                    p2.add(temp);
+                    p2.add(buttons[count]);
                 }
                 else if (i == 3) {
-                    p3.add(temp);
+                    p3.add(buttons[count]);
                 }
                 else if (i == 4) {
-                    p4.add(temp);
+                    p4.add(buttons[count]);
                 }
                 else if (i == 5) {
-                    p5.add(temp);
+                    p5.add(buttons[count]);
                 }
+                count++;
             }
         }
 
@@ -379,6 +391,8 @@ public class SwingTest {
 
         lPane.setVisible(true);
         f.setVisible(true);
+
+        
     }
     
     public static void main(String[] args) {
