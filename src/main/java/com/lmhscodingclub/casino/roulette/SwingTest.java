@@ -326,7 +326,7 @@ public class SwingTest {
         temp12.setBackground(Color.GREEN);
         temp12.setPreferredSize(new Dimension(75, 75));
         p16.add(temp12);
-        p16.setBounds(1088, 46, 75, 75);
+        p16.setBounds(1090, 46, 75, 75);
         p16.setVisible(true);
 
         JButton temp13 = new JButton("2 to 1");
@@ -338,7 +338,7 @@ public class SwingTest {
         temp13.setBackground(Color.GREEN);
         temp13.setPreferredSize(new Dimension(75, 75));
         p17.add(temp13);
-        p17.setBounds(1088, 92, 75, 75);
+        p17.setBounds(1090, 128, 75, 75);
         p17.setVisible(true);
 
         JButton temp14 = new JButton("2 to 1");
@@ -350,7 +350,7 @@ public class SwingTest {
         temp14.setBackground(Color.GREEN);
         temp14.setPreferredSize(new Dimension(75, 75));
         p18.add(temp14);
-        p18.setBounds(1088, 138, 75, 75);
+        p18.setBounds(1090, 211, 75, 75);
         p18.setVisible(true);
 
         mainP.add(p0);
@@ -373,6 +373,8 @@ public class SwingTest {
         lPane.add(p14);
         lPane.add(p15);
         lPane.add(p16);
+        lPane.add(p17);
+        lPane.add(p18);
         f.setContentPane(lPane);
 
         lPane.setVisible(true);
