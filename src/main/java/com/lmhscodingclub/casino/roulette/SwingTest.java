@@ -185,8 +185,8 @@ public class SwingTest {
                 buttons[count].setActionCommand(choice);
                 buttons[count].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        
-                        System.out.println("You have clicked button " + choice);
+                        String choice1 = e.getActionCommand();
+                        System.out.println("You have clicked button " + choice1);
                     }
                 });
 
@@ -215,15 +215,24 @@ public class SwingTest {
         String[] twelves = {"1st 12", "2nd 12", "3rd 12"};
         String[] bottom1 = {"1 to 18", "EVEN", "RED", "BLACK", "ODD", "19 to 36"};
 
+        JButton[] buttons1 = new JButton[3];
         for (int x = 0; x < twelves.length; x++) {
-            JButton temp2 = new JButton(twelves[x] + " " + " ");
-            temp2.setContentAreaFilled(true);
-            temp2.setOpaque(true);
-            temp2.setBorderPainted(true);
-            temp2.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-            temp2.setForeground(Color.WHITE);
-            temp2.setBackground(Color.GREEN);
-            p6.add(temp2);
+            //JButton temp2 = new JButton(twelves[x] + " " + " ");
+            buttons1[x] = new JButton(twelves[x]);
+            buttons1[x].setContentAreaFilled(true);
+            buttons1[x].setOpaque(true);
+            buttons1[x].setBorderPainted(true);
+            buttons1[x].setBorder(BorderFactory.createLineBorder(Color.WHITE));
+            buttons1[x].setForeground(Color.WHITE);
+            buttons1[x].setBackground(Color.GREEN);
+            buttons1[x].setActionCommand(twelves[x]);
+            buttons1[x].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent eg) {
+                    String ch = eg.getActionCommand();            
+                    System.out.println("You have clicked button " + ch);
+                }
+            });
+            p6.add(buttons1[x]);
         }
 
         for (int y = 0; y < bottom1.length; y++) {
@@ -396,6 +405,8 @@ public class SwingTest {
     }
     
     public static void main(String[] args) {
+        //https://www.roseindia.net/java/example/java/swing/create_multiple_buttons_using_ja.shtml
+        //https://www.javatpoint.com/java-int-to-string
         new SwingTest();
     }
 }
