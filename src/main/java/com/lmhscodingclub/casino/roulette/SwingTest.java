@@ -55,6 +55,12 @@ public class SwingTest {
                 return new Dimension(75, 125);
             };
         };
+        JPanel p15 = new JPanel() {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(75, 125);
+            };
+        };
 
         //mainP.setPreferredSize(new Dimension(800, 407));
         mainP.setBounds(93, 50, 988, 407);
@@ -73,7 +79,6 @@ public class SwingTest {
         p11.setPreferredSize(new Dimension(1004, 8));
         p12.setPreferredSize(new Dimension(1004, 75));
         p13.setPreferredSize(new Dimension(1004, 8));
-        //p14.setPreferredSize(new Dimension(75, 125));
 
         p0.setLayout(new GridLayout(1, 12, 8, 0));
         p1.setLayout(new GridLayout(1, 12, 8, 0));
@@ -89,7 +94,6 @@ public class SwingTest {
         p11.setLayout(new GridLayout(1, 13, 75, 0));
         p12.setLayout(new GridLayout(1, 13, 75, 0));
         p13.setLayout(new GridLayout(1, 13, 75, 0));
-        //p14.setLayout(null);
 
         mainP.setBackground(Color.GREEN);
         mainP2.setBackground(Color.GREEN);
@@ -108,6 +112,7 @@ public class SwingTest {
         p12.setBackground(Color.GREEN);
         p13.setBackground(Color.GREEN);
         p14.setBackground(Color.GREEN);
+        p15.setBackground(Color.GREEN);
 
         p0.setVisible(true);
         p1.setVisible(true);
@@ -125,7 +130,6 @@ public class SwingTest {
         p11.setVisible(true);
         p12.setVisible(true);
         p13.setVisible(true);
-        //p14.setVisible(true);
 
         mainP.setVisible(true);
         mainP2.setVisible(true);
@@ -268,18 +272,29 @@ public class SwingTest {
             p13.add(temp9);
         }
 
-        JButton temp10 = new JButton("00" + " " + " ");
+        JButton temp10 = new JButton("00");
         temp10.setContentAreaFilled(true);
         temp10.setOpaque(true);
         temp10.setBorderPainted(true);
         temp10.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         temp10.setForeground(Color.WHITE);
         temp10.setBackground(Color.GREEN);
-        temp10.setBounds(0,0,75,125);
+        temp10.setPreferredSize(new Dimension(75, 125));
         p14.add(temp10);
-        p14.setBounds(0, 75, 75, 125);
+        p14.setBounds(9, 46, 75, 125);
         p14.setVisible(true);
-        //p14.setPreferredSize(new Dimension(75, 125));
+
+        JButton temp11 = new JButton("0");
+        temp11.setContentAreaFilled(true);
+        temp11.setOpaque(true);
+        temp11.setBorderPainted(true);
+        temp11.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        temp11.setForeground(Color.WHITE);
+        temp11.setBackground(Color.GREEN);
+        temp11.setPreferredSize(new Dimension(75, 125));
+        p15.add(temp11);
+        p15.setBounds(9, 174, 75, 125);
+        p15.setVisible(true);
 
         mainP.add(p0);
         mainP.add(p1);
@@ -299,6 +314,7 @@ public class SwingTest {
         lPane.add(mainP);
         lPane.add(mainP2);
         lPane.add(p14);
+        lPane.add(p15);
         f.setContentPane(lPane);
 
         lPane.setVisible(true);
