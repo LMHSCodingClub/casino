@@ -6,12 +6,14 @@ import static java.lang.System.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.Math;
+
+import com.lmhscodingclub.casino.blackjack.Blackjack;
 import com.lmhscodingclub.casino.core.Card;
 import com.lmhscodingclub.casino.core.Player;
 
 public class The_lucky_lion
 {
-   public static void main(String[] args) {
+   public static void main(String[] args) throws IOException {
       
       Scanner scan = new Scanner(System.in);
       
@@ -37,7 +39,8 @@ public class The_lucky_lion
 
       switch(saw)
       {
-         case 1: 
+         case 1:
+            Blackjack.main(sucker);
             //Blackjack(sucker); 
          break;
 

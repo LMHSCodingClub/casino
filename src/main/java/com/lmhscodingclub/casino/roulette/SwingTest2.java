@@ -156,11 +156,11 @@ public class SwingTest {
         mainP2.setVisible(true);
 
         int[][] board = {{3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36},
-                        {0,0,0,0,0,0,0,0,0,0,0,0}, 
+                        {101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112}, 
                         {2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35},
-                        {0,0,0,0,0,0,0,0,0,0,0,0}, 
+                        {201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212}, 
                         {1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34},
-                        {0,0,0,0,0,0,0,0,0,0,0,0}};
+                        {301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312}};
         
         Color[][] colors = {{Color.RED, Color.BLACK, Color.RED, Color.RED, Color.BLACK, Color.RED, Color.RED, Color.BLACK, Color.RED, Color.RED, Color.BLACK, Color.RED},
                             {Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE,Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE, Color.WHITE},
@@ -184,8 +184,8 @@ public class SwingTest {
                 String choice = String.valueOf(board[i][j]);
                 buttons[count].setActionCommand(choice);
                 buttons[count].addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        String choice1 = e.getActionCommand();
+                    public void actionPerformed(ActionEvent e1) {
+                        String choice1 = e1.getActionCommand();
                         System.out.println("You have clicked button " + choice1);
                     }
                 });
@@ -227,91 +227,155 @@ public class SwingTest {
             buttons1[x].setBackground(Color.GREEN);
             buttons1[x].setActionCommand(twelves[x]);
             buttons1[x].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent eg) {
-                    String ch = eg.getActionCommand();            
-                    System.out.println("You have clicked button " + ch);
+                public void actionPerformed(ActionEvent e2) {
+                    String choice2 = e2.getActionCommand();            
+                    System.out.println("You have clicked button " + choice2);
                 }
             });
             p6.add(buttons1[x]);
         }
 
+        JButton[] buttons2 = new JButton[6];
         for (int y = 0; y < bottom1.length; y++) {
-            JButton temp3 = new JButton(bottom1[y] + " " + " ");
-            temp3.setContentAreaFilled(true);
-            temp3.setOpaque(true);
-            temp3.setBorderPainted(true);
-            temp3.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-            temp3.setForeground(Color.WHITE);
-            temp3.setBackground(Color.GREEN);
+            //JButton temp3 = new JButton(bottom1[y] + " " + " ");
+            buttons2[y] = new JButton(bottom1[y]);
+            buttons2[y].setContentAreaFilled(true);
+            buttons2[y].setOpaque(true);
+            buttons2[y].setBorderPainted(true);
+            buttons2[y].setBorder(BorderFactory.createLineBorder(Color.WHITE));
+            buttons2[y].setForeground(Color.WHITE);
+            buttons2[y].setBackground(Color.GREEN);
+            buttons2[y].setActionCommand(bottom1[y]);
+            buttons2[y].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e3) {
+                    String choice3 = e3.getActionCommand();
+                    System.out.println("You have clicked button " + choice3);
+                }
+            });
 
             if (y == 2) {
-                temp3.setBackground(Color.RED);
+                buttons2[y].setBackground(Color.RED);
             }
             if (y == 3) {
-                temp3.setBackground(Color.BLACK);
+                buttons2[y].setBackground(Color.BLACK);
             }
 
-            p7.add(temp3);
+            p7.add(buttons2[y]);
         }
 
+        JButton[] buttons3 = new JButton[13];
         for (int a = 0; a < 13; a++) {
-            JButton temp4 = new JButton("0" + " " + " ");
-            temp4.setContentAreaFilled(true);
-            temp4.setOpaque(true);
-            temp4.setBorderPainted(true);
-            temp4.setForeground(Color.WHITE);
-            temp4.setBackground(Color.WHITE);
-            p8.add(temp4);
+            //JButton temp4 = new JButton("0" + " " + " ");
+            String value1 = String.valueOf(a);
+            buttons3[a] = new JButton("4" + value1);
+            buttons3[a].setContentAreaFilled(true);
+            buttons3[a].setOpaque(true);
+            buttons3[a].setBorderPainted(true);
+            buttons3[a].setForeground(Color.WHITE);
+            buttons3[a].setBackground(Color.WHITE);
+            buttons3[a].setActionCommand(value1);
+            buttons3[a].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e4) {
+                    String choice4 = e4.getActionCommand();
+                    System.out.println("You have clicked button " + choice4);
+                }
+            });
+            p8.add(buttons3[a]);
         }
 
+        JButton[] buttons4 = new JButton[13];
         for (int b = 0; b < 13; b++) {
-            JButton temp5 = new JButton("0" + " " + " ");
-            temp5.setContentAreaFilled(true);
-            temp5.setOpaque(true);
-            temp5.setBorderPainted(true);
-            temp5.setForeground(Color.WHITE);
-            temp5.setBackground(Color.WHITE);
-            p9.add(temp5);
+            String value2 = String.valueOf(b);
+            buttons4[b] = new JButton(value2);
+            buttons4[b].setContentAreaFilled(true);
+            buttons4[b].setOpaque(true);
+            buttons4[b].setBorderPainted(true);
+            buttons4[b].setForeground(Color.WHITE);
+            buttons4[b].setBackground(Color.WHITE);
+            buttons4[b].setActionCommand(value2);
+            buttons4[b].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e5) {
+                    String choice5 = e5.getActionCommand();
+                    System.out.println("You have clicked button " + choice5);
+                }
+            });
+            p9.add(buttons4[b]);
         }
 
+        JButton[] buttons5 = new JButton[13];
         for (int c = 0; c < 13; c++) {
-            JButton temp6 = new JButton("0" + " " + " ");
-            temp6.setContentAreaFilled(true);
-            temp6.setOpaque(true);
-            temp6.setBorderPainted(true);
-            temp6.setForeground(Color.WHITE);
-            temp6.setBackground(Color.WHITE);
-            p10.add(temp6);
+            //JButton temp6 = new JButton("0" + " " + " ");
+            String value3 = String.valueOf(c);
+            buttons5[c] = new JButton(value3);
+            buttons5[c].setContentAreaFilled(true);
+            buttons5[c].setOpaque(true);
+            buttons5[c].setBorderPainted(true);
+            buttons5[c].setForeground(Color.WHITE);
+            buttons5[c].setBackground(Color.WHITE);
+            buttons5[c].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e6) {
+                    String choice6 = e6.getActionCommand();
+                    System.out.println("You have clicked button " + choice6);
+                }
+            });
+            p10.add(buttons5[c]);
         }
 
+        JButton[] buttons6 = new JButton[13];
         for (int d = 0; d < 13; d++) {
-            JButton temp7 = new JButton("0" + " " + " ");
-            temp7.setContentAreaFilled(true);
-            temp7.setOpaque(true);
-            temp7.setBorderPainted(true);
-            temp7.setForeground(Color.WHITE);
-            temp7.setBackground(Color.WHITE);
-            p11.add(temp7);
+            //JButton temp7 = new JButton("0" + " " + " ");
+            String value4 = String.valueOf(d);
+            buttons6[d] = new JButton(value4);
+            buttons6[d].setContentAreaFilled(true);
+            buttons6[d].setOpaque(true);
+            buttons6[d].setBorderPainted(true);
+            buttons6[d].setForeground(Color.WHITE);
+            buttons6[d].setBackground(Color.WHITE);
+            buttons6[d].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e7) {
+                    String choice7 = e7.getActionCommand();
+                    System.out.println("You have clicked button " + choice7);
+                }
+            });
+            p11.add(buttons6[d]);
         }
 
+        JButton[] buttons7 = new JButton[13];
         for (int e = 0; e < 13; e++) {
-            JButton temp8 = new JButton("0" + " " + " ");
-            temp8.setContentAreaFilled(true);
-            temp8.setOpaque(true);
-            temp8.setBorderPainted(true);
-            temp8.setForeground(Color.WHITE);
-            temp8.setBackground(Color.WHITE);
-            p12.add(temp8);
+            //JButton temp8 = new JButton("0" + " " + " ");
+            String value5 = String.valueOf(e);
+            buttons7[e] = new JButton(value5);
+            buttons7[e].setContentAreaFilled(true);
+            buttons7[e].setOpaque(true);
+            buttons7[e].setBorderPainted(true);
+            buttons7[e].setForeground(Color.WHITE);
+            buttons7[e].setBackground(Color.WHITE);
+            buttons7[e].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e8) {
+                    String choice8 = e8.getActionCommand();
+                    System.out.println("You have clicked button " + choice8);
+                }
+            });
+            p12.add(buttons7[e]);
         }
 
+        JButton[] buttons8 = new JButton[13];
         for (int g = 0; g < 13; g++) {
-            JButton temp9 = new JButton("0" + " " + " ");
-            temp9.setContentAreaFilled(true);
-            temp9.setOpaque(true);
-            temp9.setBorderPainted(true);
-            temp9.setForeground(Color.WHITE);
-            temp9.setBackground(Color.WHITE);
-            p13.add(temp9);
+            //JButton temp9 = new JButton("0" + " " + " ");
+            String value6 = String.valueOf(g);
+            buttons8[g] = new JButton(value6);
+            buttons8[g].setContentAreaFilled(true);
+            buttons8[g].setOpaque(true);
+            buttons8[g].setBorderPainted(true);
+            buttons8[g].setForeground(Color.WHITE);
+            buttons8[g].setBackground(Color.WHITE);
+            buttons8[g].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e9) {
+                    String choice9 = e9.getActionCommand();
+                    System.out.println("You have clicked button " + choice9);
+                }
+            });
+            p13.add(buttons8[g]);
         }
 
         JButton temp10 = new JButton("00");
@@ -405,8 +469,6 @@ public class SwingTest {
     }
     
     public static void main(String[] args) {
-        //https://www.roseindia.net/java/example/java/swing/create_multiple_buttons_using_ja.shtml
-        //https://www.javatpoint.com/java-int-to-string
         new SwingTest();
     }
 }
