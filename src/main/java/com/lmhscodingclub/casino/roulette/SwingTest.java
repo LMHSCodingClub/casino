@@ -14,10 +14,11 @@ import java.text.SimpleDateFormat;
 
 import javax.imageio.ImageIO;
 
-import java.uitl.*;
+import java.util.*;
 import java.io.*;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SwingTest {
     public SwingTest() {
@@ -52,7 +53,8 @@ public class SwingTest {
 
         
         ArrayList<String> bet_numbers = new ArrayList<>();
-        ArrayList<JButton> bet_buttons = new ArrayList<>();
+        ArrayList<Integer> bet_buttons = new ArrayList<>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         JPanel mainP = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel p0 = new JPanel();
@@ -220,12 +222,21 @@ public class SwingTest {
                             conv2 = Integer.parseInt(convert);
                             bet_numbers.add(board[0][conv2]);
                             bet_numbers.add(board[2][conv2]);
+                            map.put(board[0][conv2], conv);
+                            map.put(board[2][conv2], conv);
+                            bet_buttons.add(conv);
+                            bet_buttons.add(conv);
+                            
                         }
                         else if (conv > 200 && conv < 213) {
                             convert = choice1.substring(1);
                             conv2 = Integer.parseInt(convert);
                             bet_numbers.add(board[2][conv2]);
                             bet_numbers.add(board[4][conv2]);
+                            map.put(board[2][conv2], conv);
+                            map.put(board[4][conv2], conv);
+                            bet_buttons.add(conv);
+                            bet_buttons.add(conv);
                         }
                         else if (conv > 300 && conv < 313) {
                             convert = choice1.substring(1);
@@ -233,9 +244,17 @@ public class SwingTest {
                             bet_numbers.add(board[0][conv2]);
                             bet_numbers.add(board[2][conv2]);
                             bet_numbers.add(board[4][conv2]);
+                            map.put(board[0][conv2], conv);
+                            map.put(board[2][conv2], conv);
+                            map.put(board[4][conv2], conv);
+                            bet_buttons.add(conv);
+                            bet_buttons.add(conv);
+                            bet_buttons.add(conv);
                         }
                         else {
                             bet_numbers.add(choice1);
+                            map.put(choice1, conv);
+                            bet_buttons.add(conv);
                         }
                         //bet_numbers.add(choice1);
                         //bet_buttons.add(buttons[count]);
@@ -286,6 +305,7 @@ public class SwingTest {
                         for (int x1 = 0; x1 < 4; x1++) {
                             int x2 = 4;
                             bet_numbers.add(board[x2][x1]);
+                            //map.put(board[x2][x1], )
                             x2-=2;
                             bet_numbers.add(board[x2][x1]);
                             x2-=2;
@@ -687,6 +707,7 @@ public class SwingTest {
             public void actionPerformed(ActionEvent e15) {
                 String choice15 = e15.getActionCommand();
                 System.out.println(bet_numbers);
+                System.out.println(map);
                 lPane.removeAll();
             }
         });
@@ -694,7 +715,7 @@ public class SwingTest {
 
         p20.setBounds(1200, 96, 75, 75);
         p20.setVisible(true);
-        p20.add(label);
+        //p20.add(label);
 
         mainP.add(p0);
         mainP.add(p1);
