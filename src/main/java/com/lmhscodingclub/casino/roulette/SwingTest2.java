@@ -53,6 +53,7 @@ public class SwingTest {
         
         ArrayList<String> bet_numbers = new ArrayList<>();
         ArrayList<JButton> bet_buttons = new ArrayList<>();
+        HashMap<String, JButton> map = new HashMap<String, JButton>();
 
         JPanel mainP = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel p0 = new JPanel();
