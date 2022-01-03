@@ -128,6 +128,9 @@ public class Poker {
     static String testWinnerHoldem(ArrayList<ArrayList<Card>> playersHands){
         int numPlayers = playersHands.size();
 
+
+
+
         for (int i = 0; i < numPlayers; i++){//Where put numplayers constant
             ArrayList<Card> testingArr = playersHands.get(i);
             HashSet<Integer> modTestingSet = new HashSet<Integer>();//Fix this cuz the set only has values
@@ -163,18 +166,45 @@ public class Poker {
         int[] result = new int[2];
         //int[] modifiedTesting = countDuplicates(testingList);
         //royalFlush(modifiedTesting);
+        //Sort testing set
+        SortByValues(testingList, testingList.size());
+        printArrayListCard(testingList);
         return result;
     }
+
+    static void printArrayListCard(ArrayList<Card> arr){
+        for(int i = 0; i < arr.size(); i++){
+            System.out.println(arr.get(i).getValue());
+        }
+    }
+    static void SortByValues(ArrayList<Card> arr, int size) 
+    { 
+
+        if(size <= 1)
+        {
+            return;
+        }
+        SortByValues(arr, size - 1 );
+       
+        Card last = arr.get(size - 1);
+        int j = size - 2;
+       
+        while (j >= 0 && arr.get(j).getValue() > last.getValue())
+        { 
+            arr.set(j + 1, arr.get(j));
+            j--; 
+        } 
+        arr.set(j + 1, last);
+    } 
     static boolean royalFlush(int[] arr){
         
         return false;
     }
     static ArrayList<int[]> countDuplicates(ArrayList<Card> testingCards){//write this to work change card class
-
         ArrayList<int[]> counts = new ArrayList<int[]>();
         for(int i = 0; i < testingCards.size(); i++ ){
-            //int currentValue = testingCards.get(i).getValue();
-            //counts.add([currentValue,]);//First value is the value, second is the suit
+            int[] currentCard= {testingCards.get(i).getValue(), testingCards.get(i).getSuitValue()};//First value is the value, second is the suit
+            counts.add(currentCard);
         }
         return counts;
     }
