@@ -2,8 +2,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.GenericDeclaration;
+import java.awt.AWTEvent;
+import java.awt.MouseInfo;
+import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.border.*;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.AttributeSet.ColorAttribute;
@@ -17,15 +22,34 @@ import javax.imageio.ImageIO;
 import java.util.*;
 import java.io.*;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SwingTest {
+    public static void main(String[] args) {
+        new SwingTest();
+    }
+    
     public SwingTest() {
         startUpGame();
     }
     
-    public static void startUpGame() {
+    private JLayeredPane lPane = new JLayeredPane();
+    private ArrayList<String> bet_numbers = new ArrayList<>();
+    private ArrayList<String> bet_buttons = new ArrayList<>();
+    private LinkedHashMap<String, String> map = new LinkedHashMap<>();
+    private ArrayList<String> type = new ArrayList<>();
+    private ArrayList<Integer> allBets = new ArrayList<>();
+    private ArrayList<Integer> payout = new ArrayList<>();
+    private String[] wheel = new String[38];
+    private String ball;
+    private int bank;
+    private int total_money;
+    private int bet_amount;
+    private int max_amount = 5000;
+
+    public void startUpGame() {
         JFrame f = new JFrame("Roulette");
         //f.setSize(900,450);
         f.setBounds(0, 0, 1300, 600);
@@ -33,13 +57,12 @@ public class SwingTest {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setBackground(new Color(53, 101, 77));
 
-        JLayeredPane lPane = new JLayeredPane();
+        //JLayeredPane lPane = new JLayeredPane();
         //lPane.setLayout(new BorderLayout());
         lPane.setBounds(0, 0, 1079, 407);
         //lPane.setVisible(true);
         lPane.setBackground(new Color(53, 101, 77));
 
-        String[] wheel = new String[38];
         wheel[0] = "00";
         wheel[1] = "0";
         for (int ig = 2; ig < 38; ig++) {
@@ -49,12 +72,14 @@ public class SwingTest {
 
         Random rand = new Random();
         int hold = rand.nextInt(wheel.length);
-        String ball = wheel[hold];
+        ball = wheel[hold];
 
-        
-        ArrayList<String> bet_numbers = new ArrayList<>();
-        ArrayList<Integer> bet_buttons = new ArrayList<>();
-        HashMap<String, Integer> map = new HashMap<>();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter your bank amount: ");
+        bank = scan.nextInt();
+
+        System.out.println("Enter how much a chip(click) is worth: ");
+        bet_amount = scan.nextInt();
 
         JPanel mainP = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel p0 = new JPanel();
@@ -222,10 +247,14 @@ public class SwingTest {
                             conv2 = Integer.parseInt(convert);
                             bet_numbers.add(board[0][conv2]);
                             bet_numbers.add(board[2][conv2]);
-                            map.put(board[0][conv2], conv);
-                            map.put(board[2][conv2], conv);
-                            bet_buttons.add(conv);
-                            bet_buttons.add(conv);
+                            map.put(board[0][conv2], choice1);
+                            map.put(board[2][conv2], choice1);
+                            bet_buttons.add(choice1);
+                            bet_buttons.add(choice1);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                             
                         }
                         else if (conv > 200 && conv < 213) {
@@ -233,10 +262,14 @@ public class SwingTest {
                             conv2 = Integer.parseInt(convert);
                             bet_numbers.add(board[2][conv2]);
                             bet_numbers.add(board[4][conv2]);
-                            map.put(board[2][conv2], conv);
-                            map.put(board[4][conv2], conv);
-                            bet_buttons.add(conv);
-                            bet_buttons.add(conv);
+                            map.put(board[2][conv2], choice1);
+                            map.put(board[4][conv2], choice1);
+                            bet_buttons.add(choice1);
+                            bet_buttons.add(choice1);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                         else if (conv > 300 && conv < 313) {
                             convert = choice1.substring(1);
@@ -244,20 +277,26 @@ public class SwingTest {
                             bet_numbers.add(board[0][conv2]);
                             bet_numbers.add(board[2][conv2]);
                             bet_numbers.add(board[4][conv2]);
-                            map.put(board[0][conv2], conv);
-                            map.put(board[2][conv2], conv);
-                            map.put(board[4][conv2], conv);
-                            bet_buttons.add(conv);
-                            bet_buttons.add(conv);
-                            bet_buttons.add(conv);
+                            map.put(board[0][conv2], choice1);
+                            map.put(board[2][conv2], choice1);
+                            map.put(board[4][conv2], choice1);
+                            bet_buttons.add(choice1);
+                            bet_buttons.add(choice1);
+                            bet_buttons.add(choice1);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                         else {
                             bet_numbers.add(choice1);
-                            map.put(choice1, conv);
-                            bet_buttons.add(conv);
+                            map.put(choice1, choice1);
+                            bet_buttons.add(choice1);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
-                        //bet_numbers.add(choice1);
-                        //bet_buttons.add(buttons[count]);
                     }
                 });
 
@@ -305,31 +344,60 @@ public class SwingTest {
                         for (int x1 = 0; x1 < 4; x1++) {
                             int x2 = 4;
                             bet_numbers.add(board[x2][x1]);
-                            //map.put(board[x2][x1], )
+                            map.put(board[x2][x1], twelves[0]);
+                            bet_buttons.add(twelves[0]);
                             x2-=2;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[0]);
+                            bet_buttons.add(twelves[0]);
                             x2-=2;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[0]);
+                            bet_buttons.add(twelves[0]);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                     }
                     else if (choice2.equals("2nd 12")) {
                         for (int x1 = 4; x1 < 8; x1++) {
                             int x2 = 4;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[1]);
+                            bet_buttons.add(twelves[1]);
                             x2-=2;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[1]);
+                            bet_buttons.add(twelves[1]);
                             x2-=2;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[1]);
+                            bet_buttons.add(twelves[1]);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                     }
                     else if (choice2.equals("3rd 12")) {
                         for (int x1 = 8; x1 < 12; x1++) {
                             int x2 = 4;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[2]);
+                            bet_buttons.add(twelves[2]);
                             x2-=2;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[2]);
+                            bet_buttons.add(twelves[2]);
                             x2-=2;
                             bet_numbers.add(board[x2][x1]);
+                            map.put(board[x2][x1], twelves[2]);
+                            bet_buttons.add(twelves[2]);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                     }
                 }
@@ -356,18 +424,30 @@ public class SwingTest {
                         for (int y1 = 0; y1 < 6; y1++) {
                             int y2 = 4;
                             bet_numbers.add(board[y2][y1]);
+                            map.put(board[y2][y1], bottom1[0]);
+                            bet_buttons.add(bottom1[0]);
                             y2-=2;
                             bet_numbers.add(board[y2][y1]);
+                            map.put(board[y2][y1], bottom1[0]);
+                            bet_buttons.add(bottom1[0]);
                             y2-=2;
                             bet_numbers.add(board[y2][y1]);
+                            map.put(board[y2][y1], bottom1[0]);
+                            bet_buttons.add(bottom1[0]);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                     }
                     else if (choice3.equals("EVEN")) {
-                        for (int y1 = 0; y1 < board.length; y1+=2) {
+                        for (int y1 = 0; y1 < 4; y1+=2) {
                             for (int y2 = 0; y2 < board[0].length; y2++) {
                                 int convert = Integer.parseInt(board[y1][y2]);
                                 if (convert%2 == 0) {
                                     bet_numbers.add(board[y1][y2]);
+                                    map.put(board[y1][y2], bottom1[1]);
+                                    bet_buttons.add(bottom1[1]);
                                 }
                             }
                         }
@@ -377,6 +457,12 @@ public class SwingTest {
                             for (int y2 = 0; y2 < colors[0].length; y2++) {
                                 if (colors[y1][y2].equals(Color.RED)) {
                                     bet_numbers.add(board[y1][y2]);
+                                    map.put(board[y1][y2], bottom1[2]);
+                                    bet_buttons.add(bottom1[2]);
+                                    if (total_money <= max_amount-bet_amount) {
+                                        total_money+=bet_amount;
+                                        allBets.add(bet_amount);
+                                    }
                                 }
                             }
                         }
@@ -386,16 +472,24 @@ public class SwingTest {
                             for (int y2 = 0; y2 < colors[0].length; y2++) {
                                 if (colors[y1][y2].equals(Color.BLACK)) {
                                     bet_numbers.add(board[y1][y2]);
+                                    map.put(board[y1][y2], bottom1[3]);
+                                    bet_buttons.add(bottom1[3]);
                                 }
                             }
                         }
                     }
                     else if (choice3.equals("ODD")) {
-                        for (int y1 = 0; y1 < board.length; y1+=2) {
+                        for (int y1 = 0; y1 < 4; y1+=2) {
                             for (int y2 = 0; y2 < board[0].length; y2++) {
                                 int convert2 = Integer.parseInt(board[y1][y2]);
                                 if (convert2%2 != 0) {
                                     bet_numbers.add(board[y1][y2]);
+                                    map.put(board[y1][y2], bottom1[4]);
+                                    bet_buttons.add(bottom1[4]);
+                                    if (total_money <= max_amount-bet_amount) {
+                                        total_money+=bet_amount;
+                                        allBets.add(bet_amount);
+                                    }
                                 }
                             }
                         }
@@ -404,10 +498,20 @@ public class SwingTest {
                         for (int y1 = 6; y1 < 12; y1++) {
                             int y2 = 4;
                             bet_numbers.add(board[y2][y1]);
+                            map.put(board[y2][y1], bottom1[5]);
+                            bet_buttons.add(bottom1[5]);
                             y2-=2;
                             bet_numbers.add(board[y2][y1]);
+                            map.put(board[y2][y1], bottom1[5]);
+                            bet_buttons.add(bottom1[5]);
                             y2-=2;
                             bet_numbers.add(board[y2][y1]);
+                            map.put(board[y2][y1], bottom1[5]);
+                            bet_buttons.add(bottom1[5]);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                     }
                 }
@@ -426,7 +530,13 @@ public class SwingTest {
         JButton[] buttons3 = new JButton[13];
         for (int a = 0; a < 13; a++) {
             //JButton temp4 = new JButton("0" + " " + " ");
-            String value1 = String.valueOf(a);
+            String value1 = "";
+            if (a < 10) {
+                value1 = "40" + String.valueOf(a);
+            }
+            else {
+                value1 = "4" + String.valueOf(a);
+            }
             buttons3[a] = new JButton(value1);
             buttons3[a].setContentAreaFilled(true);
             buttons3[a].setOpaque(true);
@@ -438,10 +548,19 @@ public class SwingTest {
                 public void actionPerformed(ActionEvent e4) {
                     String choice4 = e4.getActionCommand();
                     System.out.println("You have clicked button " + choice4);
-                    int conv = Integer.parseInt(choice4);
+                    String convert = choice4.substring(1);
+                    int conv = Integer.parseInt(convert);
                     if (conv > 0 && conv < 12) {
                         bet_numbers.add(board[0][conv-1]);
                         bet_numbers.add(board[0][conv]);
+                        map.put(board[0][conv-1], choice4);
+                        map.put(board[0][conv], choice4);
+                        bet_buttons.add(choice4);
+                        bet_buttons.add(choice4);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                 }
             });
@@ -449,8 +568,14 @@ public class SwingTest {
         }
 
         JButton[] buttons4 = new JButton[13];
+        String value2 = "";
         for (int b = 0; b < 13; b++) {
-            String value2 = String.valueOf(b);
+            if (b < 10) {
+                value2 = "50" + String.valueOf(b);
+            }
+            else {
+                value2 = "5" + String.valueOf(b);
+            }
             buttons4[b] = new JButton(value2);
             buttons4[b].setContentAreaFilled(true);
             buttons4[b].setOpaque(true);
@@ -462,17 +587,40 @@ public class SwingTest {
                 public void actionPerformed(ActionEvent e5) {
                     String choice5 = e5.getActionCommand();
                     System.out.println("You have clicked button " + choice5);
-                    int conv = Integer.parseInt(choice5);
+                    String convert = choice5.substring(1);
+                    int conv = Integer.parseInt(convert);
                     if (conv == 0) {
                         bet_numbers.add(board[0][conv]);
                         bet_numbers.add(board[2][conv]);
                         bet_numbers.add("00");
+                        map.put(board[0][conv], choice5);
+                        map.put(board[2][conv], choice5);
+                        map.put("00", choice5);
+                        bet_buttons.add(choice5);
+                        bet_buttons.add(choice5);
+                        bet_buttons.add(choice5);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                     else if ( conv > 0 && conv < 12) {
                         bet_numbers.add(board[0][conv-1]);
                         bet_numbers.add(board[0][conv]);
                         bet_numbers.add(board[2][conv-1]);
                         bet_numbers.add(board[2][conv]);
+                        map.put(board[0][conv-1], choice5);
+                        map.put(board[0][conv], choice5);
+                        map.put(board[2][conv-1], choice5);
+                        map.put(board[2][conv], choice5);
+                        bet_buttons.add(choice5);
+                        bet_buttons.add(choice5);
+                        bet_buttons.add(choice5);
+                        bet_buttons.add(choice5);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                 }
             });
@@ -482,7 +630,13 @@ public class SwingTest {
         JButton[] buttons5 = new JButton[13];
         for (int c = 0; c < 13; c++) {
             //JButton temp6 = new JButton("0" + " " + " ");
-            String value3 = String.valueOf(c);
+            String value3 = "";
+            if (c < 10) {
+                value3 = "60" + String.valueOf(c);
+            }
+            else {
+                value3 = "6" + String.valueOf(c);
+            }
             buttons5[c] = new JButton(value3);
             buttons5[c].setContentAreaFilled(true);
             buttons5[c].setOpaque(true);
@@ -493,10 +647,19 @@ public class SwingTest {
                 public void actionPerformed(ActionEvent e6) {
                     String choice6 = e6.getActionCommand();
                     System.out.println("You have clicked button " + choice6);
-                    int conv = Integer.parseInt(choice6);
+                    String convert = choice6.substring(1);
+                    int conv = Integer.parseInt(convert);
                     if (conv > 0 && conv < 12) {
                         bet_numbers.add(board[2][conv-1]);
                         bet_numbers.add(board[2][conv]);
+                        map.put(board[2][conv-1], choice6);
+                        map.put(board[2][conv], choice6);
+                        bet_buttons.add(choice6);
+                        bet_buttons.add(choice6);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                 }
             });
@@ -506,7 +669,13 @@ public class SwingTest {
         JButton[] buttons6 = new JButton[13];
         for (int d = 0; d < 13; d++) {
             //JButton temp7 = new JButton("0" + " " + " ");
-            String value4 = String.valueOf(d);
+            String value4 = "";
+            if (d < 10) {
+                value4 = "70" + String.valueOf(d);
+            }
+            else {
+                value4 = "7" + String.valueOf(d);
+            }
             buttons6[d] = new JButton(value4);
             buttons6[d].setContentAreaFilled(true);
             buttons6[d].setOpaque(true);
@@ -517,17 +686,40 @@ public class SwingTest {
                 public void actionPerformed(ActionEvent e7) {
                     String choice7 = e7.getActionCommand();
                     System.out.println("You have clicked button " + choice7);
-                    int conv = Integer.parseInt(choice7);
+                    String convert = choice7.substring(1);
+                    int conv = Integer.parseInt(convert);
                     if (conv == 0) {
                         bet_numbers.add(board[2][conv]);
                         bet_numbers.add(board[4][conv]);
                         bet_numbers.add("0");
+                        map.put(board[2][conv], choice7);
+                        map.put(board[4][conv], choice7);
+                        map.put("0", choice7);
+                        bet_buttons.add(choice7);
+                        bet_buttons.add(choice7);
+                        bet_buttons.add(choice7);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                     else if (conv < 12) {
                         bet_numbers.add(board[2][conv-1]);
                         bet_numbers.add(board[2][conv]);
                         bet_numbers.add(board[4][conv-1]);
                         bet_numbers.add(board[4][conv]);
+                        map.put(board[2][conv-1], choice7);
+                        map.put(board[2][conv], choice7);
+                        map.put(board[4][conv-1], choice7);
+                        map.put(board[4][conv], choice7);
+                        bet_buttons.add(choice7);
+                        bet_buttons.add(choice7);
+                        bet_buttons.add(choice7);
+                        bet_buttons.add(choice7);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                 }
             });
@@ -537,7 +729,13 @@ public class SwingTest {
         JButton[] buttons7 = new JButton[13];
         for (int e = 0; e < 13; e++) {
             //JButton temp8 = new JButton("0" + " " + " ");
-            String value5 = String.valueOf(e);
+            String value5 = "";
+            if (e < 10) {
+                value5 = "80" + String.valueOf(e);
+            }
+            else {
+                value5 = "8" + String.valueOf(e);
+            }
             buttons7[e] = new JButton(value5);
             buttons7[e].setContentAreaFilled(true);
             buttons7[e].setOpaque(true);
@@ -548,10 +746,19 @@ public class SwingTest {
                 public void actionPerformed(ActionEvent e8) {
                     String choice8 = e8.getActionCommand();
                     System.out.println("You have clicked button " + choice8);
-                    int conv = Integer.parseInt(choice8);
+                    String convert = choice8.substring(1);
+                    int conv = Integer.parseInt(convert);
                     if (conv > 0 && conv < 12) {
                         bet_numbers.add(board[4][conv-1]);
                         bet_numbers.add(board[4][conv]);
+                        map.put(board[4][conv-1], choice8);
+                        map.put(board[4][conv], choice8);
+                        bet_buttons.add(choice8);
+                        bet_buttons.add(choice8);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                 }
             });
@@ -561,7 +768,13 @@ public class SwingTest {
         JButton[] buttons8 = new JButton[13];
         for (int g = 0; g < 13; g++) {
             //JButton temp9 = new JButton("0" + " " + " ");
-            String value6 = String.valueOf(g);
+            String value6 = "";
+            if (g < 10) {
+                value6 = "90" + String.valueOf(g);
+            }
+            else {
+                value6 = "9" + String.valueOf(g);
+            }
             buttons8[g] = new JButton(value6);
             buttons8[g].setContentAreaFilled(true);
             buttons8[g].setOpaque(true);
@@ -572,19 +785,44 @@ public class SwingTest {
                 public void actionPerformed(ActionEvent e9) {
                     String choice9 = e9.getActionCommand();
                     System.out.println("You have clicked button " + choice9);
-                    int conv = Integer.parseInt(choice9);
+                    String convert = choice9.substring(1);
+                    int conv = Integer.parseInt(convert);
                     if (conv == 0) {
                         bet_numbers.add(board[0][0]);
                         bet_numbers.add(board[2][0]);
                         bet_numbers.add(board[4][0]);
                         bet_numbers.add("00");
                         bet_numbers.add("0");
+                        map.put(board[0][0], choice9);
+                        map.put(board[2][0], choice9);
+                        map.put(board[4][0], choice9);
+                        map.put("00", choice9);
+                        map.put("0", choice9);
+                        bet_buttons.add(choice9);
+                        bet_buttons.add(choice9);
+                        bet_buttons.add(choice9);
+                        bet_buttons.add(choice9);
+                        bet_buttons.add(choice9);
+                        if (total_money <= max_amount-bet_amount) {
+                            total_money+=bet_amount;
+                            allBets.add(bet_amount);
+                        }
                     }
                     else if (conv > 0 && conv < 12) {
                         for (int g1 = conv-1; g1 < (conv); g1++) {
                             bet_numbers.add(board[0][g1]);
                             bet_numbers.add(board[2][g1]);
-                            bet_numbers.add(board[2][g1]);
+                            bet_numbers.add(board[4][g1]);
+                            map.put(board[0][g1], choice9);
+                            map.put(board[2][g1], choice9);
+                            map.put(board[4][g1], choice9);
+                            bet_buttons.add(choice9);
+                            bet_buttons.add(choice9);
+                            bet_buttons.add(choice9);
+                            if (total_money <= max_amount-bet_amount) {
+                                total_money+=bet_amount;
+                                allBets.add(bet_amount);
+                            }
                         }
                     }
                 }
@@ -608,6 +846,12 @@ public class SwingTest {
                 String choice10 = e10.getActionCommand();
                 System.out.println("You have clicked button " + choice10);
                 bet_numbers.add(choice10);
+                map.put(choice10, choice10);
+                bet_buttons.add(choice10);
+                if (total_money <= max_amount-bet_amount) {
+                    total_money+=bet_amount;
+                    allBets.add(bet_amount);
+                }
             }
         });
 
@@ -627,6 +871,12 @@ public class SwingTest {
                 String choice11 = e11.getActionCommand();
                 System.out.println("You have clicked button " + choice11);
                 bet_numbers.add(choice11);
+                map.put(choice11, choice11);
+                bet_buttons.add(choice11);
+                if (total_money <= max_amount-bet_amount) {
+                    total_money+=bet_amount;
+                    allBets.add(bet_amount);
+                }
             }
         });
 
@@ -647,6 +897,12 @@ public class SwingTest {
                 System.out.println("You have clicked button " + choice12);
                 for (int i = 0; i < 12; i++) {
                     bet_numbers.add(board[0][i]);
+                    map.put(board[0][i], "2 to 1");
+                    bet_buttons.add("2 to 1");
+                    if (total_money <= max_amount-bet_amount) {
+                        total_money+=bet_amount;
+                        allBets.add(bet_amount);
+                    }
                 }
             }
         });
@@ -668,6 +924,12 @@ public class SwingTest {
                 System.out.println("You have clicked button " + choice13);
                 for (int i = 0; i < 12; i++) {
                     bet_numbers.add(board[2][i]);
+                    map.put(board[0][i], "2 to 1");
+                    bet_buttons.add("2 to 1");
+                    if (total_money <= max_amount-bet_amount) {
+                        total_money+=bet_amount;
+                        allBets.add(bet_amount);
+                    }
                 }
             }
         });
@@ -689,33 +951,19 @@ public class SwingTest {
                 System.out.println("You have clicked button " + choice14);
                 for (int i = 0; i < 12; i++) {
                     bet_numbers.add(board[4][i]);
+                    map.put(board[0][i], "2 to 1");
+                    bet_buttons.add("2 to 1");
+                    if (total_money <= max_amount-bet_amount) {
+                        total_money+=bet_amount;
+                        allBets.add(bet_amount);
+                    }
                 }
             }
         });
 
-        JButton temp15 = new JButton("DONE");
-        temp15.setContentAreaFilled(true);
-        temp15.setOpaque(true);
-        temp15.setBorderPainted(true);
-        temp15.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-        temp15.setForeground(Color.WHITE);
-        temp15.setBackground(new Color(53, 101, 77));
-        temp15.setPreferredSize(new Dimension(50, 50));
-        p19.setBounds(1200, 46, 50, 50);
-        p19.setVisible(true);
-        temp15.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e15) {
-                String choice15 = e15.getActionCommand();
-                System.out.println(bet_numbers);
-                System.out.println(map);
-                lPane.removeAll();
-            }
-        });
-        p19.add(temp15);
-
-        p20.setBounds(1200, 96, 75, 75);
+        p20.setBounds(590, 10, 100, 100);
         p20.setVisible(true);
-        //p20.add(label);
+        p20.add(new TestPane());
 
         mainP.add(p0);
         mainP.add(p1);
@@ -739,15 +987,124 @@ public class SwingTest {
         lPane.add(p16);
         lPane.add(p17);
         lPane.add(p18);
-        lPane.add(p19);
+        //lPane.add(p19);
         lPane.add(p20);
         f.setContentPane(lPane);
 
         lPane.setVisible(true);
         f.setVisible(true);
     }
-    
-    public static void main(String[] args) {
-        new SwingTest();
+
+    public class TestPane extends JPanel {
+        private Timer timer;
+        private long startTime = -1;
+        private long duration = 30000;
+
+        private JLabel label;
+
+        public TestPane() {
+            setLayout(new GridBagLayout());
+            setBackground(new Color(53, 101, 77));
+            label = new JLabel("WAIT");
+            label.setForeground(Color.WHITE);
+            timer = new Timer(10, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (startTime < 0) {
+                        startTime = System.currentTimeMillis();
+                    }
+                    long now = System.currentTimeMillis();
+                    long clockTime = now - startTime;
+                    if (clockTime >= duration) {
+                        clockTime = duration;
+                        timer.stop();
+                        label.setText("ALL BETS ARE OVER");
+                        try {
+                            Thread.sleep(3000);
+                        }
+                        catch (InterruptedException exc) {
+                            exc.printStackTrace();
+                        }
+                        lPane.removeAll();
+                        lPane.revalidate();
+                        lPane.repaint();
+                        if (map.containsKey(ball)) {
+                            for (int i = 0; i < bet_numbers.size(); i++) {
+                                if (bet_numbers.get(i).equals(ball)) {
+                                    type.add(bet_buttons.get(i));
+                                    payout.add(bet_amount);
+                                }
+                            }
+                            //System.out.println(type);
+                            
+                            int money_hold = bank;
+                            int convert;
+                            for (int j = 0; j < payout.size(); j++) {
+                                if (type.get(j).equals("2 to 1")) {
+                                    bank += (payout.get(j) + (payout.get(j)*2));
+                                }
+                                else if (type.get(j).length() == 6 && type.get(j).substring(4).equals("12")) {
+                                    bank += (payout.get(j) + (payout.get(j)*2));
+                                }
+                                else if (type.get(j).equals("ODD") || type.get(j).equals("EVEN")) {
+                                    bank += (payout.get(j) + payout.get(j));
+                                }
+                                else if (type.get(j).equals("1-18") || type.get(j).equals("19-36")) {
+                                    bank += (payout.get(j) + payout.get(j));
+                                }
+                                else if (type.get(j).equals("BLACK") || type.get(j).equals("RED")) {
+                                    bank += (payout.get(j) + payout.get(j));
+                                }
+
+                                try {
+                                    if (type.get(j).length() <= 3 && !(type.get(j).equals("RED")) && !(type.get(j).equals("ODD"))) {
+                                        convert = Integer.parseInt(type.get(j));
+                                        if (convert < 100) {
+                                            bank += (payout.get(j) + (payout.get(j)*35));
+                                        }
+                                        else if (convert >= 100 && convert < 212) {
+                                            bank += (payout.get(j) + (payout.get(j)*17));
+                                        }
+                                        else if (convert >= 300 && convert < 312) {
+                                            bank += (payout.get(j) + (payout.get(j)*11));
+                                        }
+                                        else if ((convert >= 400 && convert < 412) || (convert >= 600 && convert < 612) || (convert >= 800 && convert < 812)) {
+                                            bank += (payout.get(j) + (payout.get(j)*17));
+                                        }
+                                        else if (convert == 500 || convert == 700) {
+                                            bank += (payout.get(j) + (payout.get(j)*11));
+                                        }
+                                        else if ((convert > 500 && convert < 512) || (convert > 700 && convert < 712)) {
+                                            bank += (payout.get(j) + (payout.get(j)*8));
+                                        }
+                                        else if (convert == 900) {
+                                            bank += (payout.get(j) + (payout.get(j)*6));
+                                        }
+                                        else if (convert > 900 && convert < 912) {
+                                            bank += (payout.get(j) + (payout.get(j)*5));
+                                        }
+                                    }
+                                }
+                                catch (NumberFormatException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                            
+                            System.out.println("The Number Was " + ball + ", And You Win $" + (bank-money_hold));
+                            System.out.println("Bank: " + bank);
+                            
+                        }
+                        else {
+                            System.out.println("YOU LOSE");
+                        }
+                    }
+                    SimpleDateFormat df = new SimpleDateFormat("ss");
+                    label.setText(df.format(duration - clockTime));
+                }
+            });
+            timer.setInitialDelay(2000);
+            timer.start();
+            add(label);
+        }
     }
 }
