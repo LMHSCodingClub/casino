@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 
 public class Slots {
+   float bet;
    // takes user input for bet
    //
    Slots() {
@@ -12,13 +13,14 @@ public class Slots {
        //
          Scanner input = new Scanner (System.in);
          System.out.println("How much would you like to bet? (from $1 to $3)");
-         float bet = input.nextFloat();
+         bet = input.nextFloat();
          // if valid bet is not entered, continue to ask for input
          //
          while(bet < 1 || bet > 3) {
             System.out.println("Please enter a valid input (from $1 to $3)");
             bet = input.nextFloat();
          }
+         System.out.println("");
          input.close();
          
     }
@@ -27,20 +29,38 @@ public class Slots {
     //
     float play() {
        Hashtable<SlotsResult, Integer> payouts = new Hashtable<>();
-       payouts.put(new SlotsResult(10, 10, 10), 1000);
+       
+       for(int i = 10; i > 0; i--){
+         payouts.put(new SlotsResult(i, i, i), i*100);
+       }
+       payouts.put(new SlotsResult(1, 2, 3), 2);
+       payouts.put(new SlotsResult(4, 5, 6), 5);
+       payouts.put(new SlotsResult(8, 9, 10), 50);
+       payouts.put(new SlotsResult(10, 9, 10), 90);
+       payouts.put(new SlotsResult(9, 8, 9), 90);
+       payouts.put(new SlotsResult(1, 2, 1), 50);
+       payouts.put(new SlotsResult(3, 5, 8), 60);
+       payouts.put(new SlotsResult(5, 6, 7), 40);
+       payouts.put(new SlotsResult(1, 2, 3), 35);
+       payouts.put(new SlotsResult(7, 5, 8), 37);
 
-         int slot1 = (int)(Math.random()*(10)+1);
-         int slot2 = (int)(Math.random()*(10)+1);
-         int slot3 = (int)(Math.random()*(10)+1);
-         System.out.println(slot1);
-         System.out.println(slot2);
-         System.out.println(slot3);
+
+          int slot1 = (int)(Math.random()*(10)+1);
+          int slot2 = (int)(Math.random()*(10)+1);
+          int slot3 = (int)(Math.random()*(10)+1);
+
+         System.out.print(slot1 + " ");
+         System.out.print(slot2 + " ");
+         System.out.print(slot3 + "\n");
+         
 
          SlotsResult result = new SlotsResult(slot1, slot2, slot3);
          if (payouts.containsKey(result)) {
-            System.out.println("You win!");
+            float output = payouts.get(result);
+            System.out.println("You win $" + bet*output);
+
          } else {
-            System.out.println("You lose!");
+            System.out.println("You lose");
          }
          // If all slots match, then win; if slot1 and slot2 match, then half the money
          //
