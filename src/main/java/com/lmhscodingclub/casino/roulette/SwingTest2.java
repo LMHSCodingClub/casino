@@ -1035,13 +1035,15 @@ public class SwingTest {
                                     payout.add(bet_amount);
                                 }
                             }
+                            System.out.println(type);
+                            
                             int money_hold = bank;
                             int convert;
                             for (int j = 0; j < payout.size(); j++) {
                                 if (type.get(j).equals("2 to 1")) {
                                     bank += (payout.get(j) + (payout.get(j)*2));
                                 }
-                                else if (type.get(j).substring(4).equals("12")) {
+                                else if (type.get(j).length() == 6 && type.get(j).substring(4).equals("12")) {
                                     bank += (payout.get(j) + (payout.get(j)*2));
                                 }
                                 else if (type.get(j).equals("ODD") || type.get(j).equals("EVEN")) {
@@ -1050,35 +1052,39 @@ public class SwingTest {
                                 else if (type.get(j).equals("1-18") || type.get(j).equals("19-36")) {
                                     bank += (payout.get(j) + payout.get(j));
                                 }
-                                else if (type.get(j).equals("RED") || type.get(j).equals("BLACK")) {
+                                else if (type.get(j).equals("BLACK") || type.get(j).equals("RED")) {
                                     bank += (payout.get(j) + payout.get(j));
                                 }
 
-                                convert = Integer.parseInt(type.get(j));
-
-                                if (convert < 100) {
-                                    bank += (payout.get(j) + (payout.get(j)*35));
+                                try {
+                                    convert = Integer.parseInt(type.get(j));
+                                    if (convert < 100) {
+                                        bank += (payout.get(j) + (payout.get(j)*35));
+                                    }
+                                    else if (convert >= 100 && convert < 212) {
+                                        bank += (payout.get(j) + (payout.get(j)*17));
+                                    }
+                                    else if (convert >= 300 && convert < 312) {
+                                        bank += (payout.get(j) + (payout.get(j)*11));
+                                    }
+                                    else if ((convert >= 400 && convert < 412) || (convert >= 600 && convert < 612) || (convert >= 800 && convert < 812)) {
+                                        bank += (payout.get(j) + (payout.get(j)*17));
+                                    }
+                                    else if (convert == 500 || convert == 700) {
+                                        bank += (payout.get(j) + (payout.get(j)*11));
+                                    }
+                                    else if ((convert > 500 && convert < 512) || (convert > 700 && convert < 712)) {
+                                        bank += (payout.get(j) + (payout.get(j)*8));
+                                    }
+                                    else if (convert == 900) {
+                                        bank += (payout.get(j) + (payout.get(j)*6));
+                                    }
+                                    else if (convert > 900 && convert < 912) {
+                                        bank += (payout.get(j) + (payout.get(j)*5));
+                                    }
                                 }
-                                else if (convert >= 100 && convert < 212) {
-                                    bank += (payout.get(j) + (payout.get(j)*17));
-                                }
-                                else if (convert >= 300 && convert < 312) {
-                                    bank += (payout.get(j) + (payout.get(j)*11));
-                                }
-                                else if ((convert >= 400 && convert < 412) || (convert >= 600 && convert < 612) || (convert >= 800 && convert < 812)) {
-                                    bank += (payout.get(j) + (payout.get(j)*17));
-                                }
-                                else if (convert == 500 || convert == 700) {
-                                    bank += (payout.get(j) + (payout.get(j)*11));
-                                }
-                                else if ((convert > 500 && convert < 512) || (convert > 700 && convert < 712)) {
-                                    bank += (payout.get(j) + (payout.get(j)*8));
-                                }
-                                else if (convert == 900) {
-                                    bank += (payout.get(j) + (payout.get(j)*6));
-                                }
-                                else if (convert > 900 && convert < 912) {
-                                    bank += (payout.get(j) + (payout.get(j)*5));
+                                catch (NumberFormatException exc) {
+                                    exc.printStackTrace();
                                 }
                             }
                             
