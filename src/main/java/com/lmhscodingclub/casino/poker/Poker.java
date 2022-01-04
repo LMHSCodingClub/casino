@@ -20,11 +20,11 @@ public class Poker {
             int numPlayers = scan.nextInt();
             int currentBet = 0;
             int starting_cash = 100;
-            ArrayList<Integer> deck = createDeck();//Deck is created
+            ArrayList<Card> deck = createDeck();//Deck is created
             deck = shuffleDeck(deck);//Deck is shuffled
-            ArrayList<int[]> allHands = dealHands(numPlayers, deck);//Two cards are dealt to each player into an ArrayList<int[]>
-            ArrayList<Integer> comCards = new ArrayList<Integer>(dealThree(deck));//Three cards from the deck are put into the comCards ArrayList<Integer>
-            printArray(allHands.get(0));
+            ArrayList<ArrayList<Card>> allHands = dealHands(numPlayers, deck);//Two cards are dealt to each player into an ArrayList<int[]>
+            ArrayList<Card> comCards = new ArrayList<Card>(dealThree(deck));//Three cards from the deck are put into the comCards ArrayList<Integer>
+            //printArray(allHands.get(0));
             
     
             scan.close();
@@ -39,20 +39,20 @@ public class Poker {
 
         
     }
-    static ArrayList<Integer> createDeck(){ //Makes an array of cards numbered 1-52
-        ArrayList<Integer> deck = new ArrayList<>();
+    static ArrayList<Card> createDeck(){ //Makes an array of cards numbered 1-52
+        ArrayList<Card> deck = new ArrayList<>();
         for(int i = 0; i < 52; i++){
-            deck.add(i+1);
+            Card currentCard = new Card(i);
+            deck.add(currentCard);
         }
         return deck;
     }
 
 
 
-
     
-    static ArrayList<Integer> shuffleDeck(ArrayList<Integer> originalDeck){
-        ArrayList<Integer> newDeck = new ArrayList<Integer>();
+    static ArrayList<Card> shuffleDeck(ArrayList<Card> originalDeck){
+        ArrayList<Card> newDeck = new ArrayList<Card>();
         int randomIndex = 0;
         for(int i = 0; i < 52; i++){
             randomIndex = (int)(Math.random()*(originalDeck.size()));
@@ -78,11 +78,13 @@ public class Poker {
 
 
     
-    static ArrayList<int[]> dealHands(int numPlayers, ArrayList<Integer> deck){
+    static ArrayList<ArrayList<Card>> dealHands(int numPlayers, ArrayList<Card> deck){
         
-        ArrayList<int[]> allHands = new ArrayList<int[]>();
+        ArrayList<ArrayList<Card>> allHands = new ArrayList<ArrayList<Card>>();
         for(int i = 0; i < numPlayers; i++){
-            int[] hand = new int[]{deck.get(0), deck.get(1)};
+            ArrayList<Card> hand = new ArrayList<Card>();
+            hand.add(deck.get(0));
+            hand.add(deck.get(1));
             deck.remove(0);
             deck.remove(0);
             allHands.add(hand);
@@ -94,9 +96,9 @@ public class Poker {
 
 
     
-    static ArrayList<Integer> dealThree(ArrayList<Integer> deck){
+    static ArrayList<Card> dealThree(ArrayList<Card> deck){
         deck.remove(0);
-        ArrayList<Integer> comCards = new ArrayList<Integer>();
+        ArrayList<Card> comCards = new ArrayList<Card>();
         for(int i = 0; i < 3; i++){
             comCards.add(deck.remove(0));
         }
@@ -123,11 +125,21 @@ public class Poker {
 
      
 
-    static String testWinnerHoldem(int[][] playersHands){
-        int numPlayers = playersHands.length;
-        
+    static String testWinnerHoldem(ArrayList<ArrayList<Card>> playersHands){
+        int numPlayers = playersHands.size();
+
+
+
+
         for (int i = 0; i < numPlayers; i++){//Where put numplayers constant
-            for (int  n = 0; n < 10; n ++){
+            ArrayList<Card> testingArr = playersHands.get(i);
+            HashSet<Integer> modTestingSet = new HashSet<Integer>();//Fix this cuz the set only has values
+            for(Card card : testingArr){
+                modTestingSet.add(card.getValue());
+            }
+
+            for (int  n = 0; n < 10; n ++){ 
+
                 if (n == 0){
                     //Royal Flush
                     
@@ -137,6 +149,12 @@ public class Poker {
                 }
                 else if (n == 2){
                     
+                }
+                else if(n == 3){
+                    
+                }
+                else{  
+
                 }                
             }
         }
@@ -144,6 +162,52 @@ public class Poker {
         return null; // temporary
     }
 
+    static int[] getWinCode(ArrayList<Card> testingList){//write this
+        int[] result = new int[2];
+        //int[] modifiedTesting = countDuplicates(testingList);
+        //royalFlush(modifiedTesting);
+        //Sort testing set
+        SortByValues(testingList, testingList.size());
+        printArrayListCard(testingList);
+        return result;
+    }
+
+    static void printArrayListCard(ArrayList<Card> arr){
+        for(int i = 0; i < arr.size(); i++){
+            System.out.println(arr.get(i).getValue());
+        }
+    }
+    static void SortByValues(ArrayList<Card> arr, int size) 
+    { 
+
+        if(size <= 1)
+        {
+            return;
+        }
+        SortByValues(arr, size - 1 );
+       
+        Card last = arr.get(size - 1);
+        int j = size - 2;
+       
+        while (j >= 0 && arr.get(j).getValue() > last.getValue())
+        { 
+            arr.set(j + 1, arr.get(j));
+            j--; 
+        } 
+        arr.set(j + 1, last);
+    } 
+    static boolean royalFlush(int[] arr){
+        
+        return false;
+    }
+    static ArrayList<int[]> countDuplicates(ArrayList<Card> testingCards){//write this to work change card class
+        ArrayList<int[]> counts = new ArrayList<int[]>();
+        for(int i = 0; i < testingCards.size(); i++ ){
+            int[] currentCard= {testingCards.get(i).getValue(), testingCards.get(i).getSuitValue()};//First value is the value, second is the suit
+            counts.add(currentCard);
+        }
+        return counts;
+    }
 
 
 
@@ -151,9 +215,9 @@ public class Poker {
         allHands.remove(playerNum);
     }
 
-
-
-    
+    static void raised(int num){ 
+        currentBet = num;
+    }
 
     static int betRound(ArrayList<int[]> allHands, int numPlayers, int highestBet) {
         for(int i = 0; i<allHands.size(); i++) {
@@ -164,10 +228,7 @@ public class Poker {
             }
             else if (decision.equals("raise")) {
                 int raise = scan.nextInt();
-                if (raise > highestBet)
-                    highestBet = raise;
-                else
-                    System.out.print("Die");
+                raised(raise);
             }
             else if (decision.equals("check")) {
                     
@@ -180,6 +241,7 @@ public class Poker {
 
         }
 
+    
     }
 
     
