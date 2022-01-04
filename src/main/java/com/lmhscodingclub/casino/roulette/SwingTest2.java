@@ -1005,7 +1005,7 @@ public class SwingTest {
         public TestPane() {
             setLayout(new GridBagLayout());
             setBackground(new Color(53, 101, 77));
-            label = new JLabel("...");
+            label = new JLabel("WAIT");
             label.setForeground(Color.WHITE);
             timer = new Timer(10, new ActionListener() {
                 @Override
@@ -1035,7 +1035,7 @@ public class SwingTest {
                                     payout.add(bet_amount);
                                 }
                             }
-                            System.out.println(type);
+                            //System.out.println(type);
                             
                             int money_hold = bank;
                             int convert;
@@ -1057,38 +1057,41 @@ public class SwingTest {
                                 }
 
                                 try {
-                                    convert = Integer.parseInt(type.get(j));
-                                    if (convert < 100) {
-                                        bank += (payout.get(j) + (payout.get(j)*35));
-                                    }
-                                    else if (convert >= 100 && convert < 212) {
-                                        bank += (payout.get(j) + (payout.get(j)*17));
-                                    }
-                                    else if (convert >= 300 && convert < 312) {
-                                        bank += (payout.get(j) + (payout.get(j)*11));
-                                    }
-                                    else if ((convert >= 400 && convert < 412) || (convert >= 600 && convert < 612) || (convert >= 800 && convert < 812)) {
-                                        bank += (payout.get(j) + (payout.get(j)*17));
-                                    }
-                                    else if (convert == 500 || convert == 700) {
-                                        bank += (payout.get(j) + (payout.get(j)*11));
-                                    }
-                                    else if ((convert > 500 && convert < 512) || (convert > 700 && convert < 712)) {
-                                        bank += (payout.get(j) + (payout.get(j)*8));
-                                    }
-                                    else if (convert == 900) {
-                                        bank += (payout.get(j) + (payout.get(j)*6));
-                                    }
-                                    else if (convert > 900 && convert < 912) {
-                                        bank += (payout.get(j) + (payout.get(j)*5));
+                                    if (type.get(j).length() <= 3 && !(type.get(j).equals("RED")) && !(type.get(j).equals("ODD"))) {
+                                        convert = Integer.parseInt(type.get(j));
+                                        if (convert < 100) {
+                                            bank += (payout.get(j) + (payout.get(j)*35));
+                                        }
+                                        else if (convert >= 100 && convert < 212) {
+                                            bank += (payout.get(j) + (payout.get(j)*17));
+                                        }
+                                        else if (convert >= 300 && convert < 312) {
+                                            bank += (payout.get(j) + (payout.get(j)*11));
+                                        }
+                                        else if ((convert >= 400 && convert < 412) || (convert >= 600 && convert < 612) || (convert >= 800 && convert < 812)) {
+                                            bank += (payout.get(j) + (payout.get(j)*17));
+                                        }
+                                        else if (convert == 500 || convert == 700) {
+                                            bank += (payout.get(j) + (payout.get(j)*11));
+                                        }
+                                        else if ((convert > 500 && convert < 512) || (convert > 700 && convert < 712)) {
+                                            bank += (payout.get(j) + (payout.get(j)*8));
+                                        }
+                                        else if (convert == 900) {
+                                            bank += (payout.get(j) + (payout.get(j)*6));
+                                        }
+                                        else if (convert > 900 && convert < 912) {
+                                            bank += (payout.get(j) + (payout.get(j)*5));
+                                        }
                                     }
                                 }
-                                catch (NumberFormatException exc) {
-                                    exc.printStackTrace();
+                                catch (NumberFormatException ex) {
+                                    ex.printStackTrace();
                                 }
                             }
                             
                             System.out.println("The Number Was " + ball + ", And You Win $" + (bank-money_hold));
+                            System.out.println("Bank: " + bank);
                             
                         }
                         else {
@@ -1099,7 +1102,7 @@ public class SwingTest {
                     label.setText(df.format(duration - clockTime));
                 }
             });
-            timer.setInitialDelay(5000);
+            timer.setInitialDelay(2000);
             timer.start();
             add(label);
         }
