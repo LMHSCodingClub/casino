@@ -69,7 +69,7 @@ public class Poker {
     static ArrayList<Player> constructPlayers(int numPlayers,int startingCash){
         ArrayList<Player> playerList = new ArrayList<Player>();
         for(int i = 0; i < numPlayers; i++){
-            Player currentPlayer = new Player(i, startingCash);
+            Player currentPlayer = new Player();
             playerList.add(currentPlayer);
         }
         return playerList;
@@ -196,10 +196,37 @@ public class Poker {
         } 
         arr.set(j + 1, last);
     } 
-    static boolean royalFlush(int[] arr){
-        
-        return false;
+
+
+    static ArrayList<Card> royalFlush(ArrayList<Card> arrList){
+        ArrayList<Card> straightList = new ArrayList<Card>();
+        for(int i = 0; i < arrList.size(); i++){
+            if(i >= arrList.size() - 4){
+                break;
+            }
+            else{
+                if(arrList.get(i + 1).getValue() == arrList.get(i).getValue())
+                    straightList.add(arrList.get(i));
+                boolean consecutive = true;
+                straightList.add(arrList.get(i));
+                for(int j = i + 1; j < i + 4; j++){
+                    if(arrList.get(j).getValue() == arrList.get(j-1).getValue()){
+                        straightList.add(arrList.get(j));
+                    }
+                    else if(arrList.get(j).getValue() > arrList.get(j-1).getValue()){
+                        straightList.add(arrList.get(j));
+                    }
+                    else{
+                        arrList.clear();
+                        break;
+                    }
+                }
+            }
+        }
+        return straightList;
     }
+
+
     static ArrayList<int[]> countDuplicates(ArrayList<Card> testingCards){//write this to work change card class
         ArrayList<int[]> counts = new ArrayList<int[]>();
         for(int i = 0; i < testingCards.size(); i++ ){
